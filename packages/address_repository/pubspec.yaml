@@ -1,0 +1,11 @@
+name: address_repository
+
+version: 1.0.0+2
+
+environment:
+  sdk: '>=2.15.1 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  geocoding: ^2.0.0
