@@ -90,6 +90,7 @@ class SaveCurrentLocationOnMapButtonView extends StatelessWidget {
                 //    context
                 // .read<NavigationBloc>()
                 // .add(const NavigationEvent.showChat(showChat));
+                Navigator.pop(context);
               },
               child: const Text('Konumu Kaydet'),
             ),

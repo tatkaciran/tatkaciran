@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instajobs/config/config.dart';
-import 'package:instajobs/config/managers/managers.dart';
 import 'package:instajobs/ui/splash/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
-import '../auth/blocs/authentication_bloc/authentication_bloc.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

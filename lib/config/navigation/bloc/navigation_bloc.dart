@@ -58,7 +58,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       Emitter<NavigationState> emit, NavigationState state) async {
     await for (AuthenticationState auth in _authenticationStream) {
       if (auth.status == AuthenticationStatus.unauthenticated) {
-        emit(state.copyWith(isInitialized: false));
+        emit(state.copyWith(isInitialized: true));
       }
       if (auth.status == AuthenticationStatus.authenticated) {
         emit(state.copyWith(isInitialized: true, isLoggedIn: true));
