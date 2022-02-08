@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
 import 'package:instajobs/ui/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:instajobs/ui/messages/blocs/blocs.dart';
@@ -20,7 +20,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       style: HomeAppBarWidgets.buttonStyle(_width),
       onPressed: () {
         context.read<MessagesBloc>().add(LoadMessages(userID));
-        context.read<NavigationStateManager>().showProfile(true);
+        context
+            .read<NavigationBloc>()
+            .add(const NavigationEvent.showProfile(true));
       },
       child: AppBar(
         backgroundColor: HomeAppBarWidgets.appBarColor,

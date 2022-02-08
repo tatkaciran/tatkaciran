@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
-import 'package:instajobs/config/navigation/app_routes.dart';
 import 'package:instajobs/constants/constants.dart';
+
+import 'navigation.dart';
 
 class RouteNames {
   static const String splashPath = '/splash';
@@ -19,17 +19,20 @@ class RouteNames {
 }
 
 class AppRouter {
-  final NavigationStateManager manager;
-  AppRouter({required this.manager});
+  AppRouter({required this.navigationState});
+
+  final NavigationState navigationState;
 
   GoRouter get router {
-    bool isLoggedIn = manager.isloggedIn;
-    bool isInitialized = manager.isInitialized;
-    bool isShowedProfile = manager.isShowedProfile;
-    String currentProfileTab = manager.currentProfileTab;
-    bool isShowedChat = manager.isShowedChat;
-    bool isShowedAddJob = manager.isShowedAddJob;
-    // bool isLocationDefined = manager.isLocationDefined;
+    bool isLoggedIn = navigationState.isLoggedIn;
+    bool isInitialized = navigationState.isInitialized;
+    bool isShowedProfile = navigationState.isShowedProfile;
+    String currentProfileTab = navigationState.currentProfileTab;
+    bool isShowedChat = navigationState.isShowedChat;
+    bool isShowedAddJob = navigationState.isShowedAddJob;
+    bool isLocationDefined = navigationState.isLocationDefined;
+    bool isShowedJobDetails = navigationState.isShowedJobDetails;
+
     return GoRouter(
       // debugLogDiagnostics: true,
       redirect: (GoRouterState state) {
@@ -38,6 +41,7 @@ class AppRouter {
           if (state.subloc == RouteNames.splashPath) {
             return null;
           }
+
           return RouteNames.splashPath;
         }
 

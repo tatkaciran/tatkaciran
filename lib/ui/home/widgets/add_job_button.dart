@@ -1,4 +1,4 @@
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
 
 class AddJobButton extends StatelessWidget {
@@ -12,7 +12,9 @@ class AddJobButton extends StatelessWidget {
           Theme.of(context).floatingActionButtonTheme.foregroundColor,
       child: const Icon(Icons.add),
       onPressed: () {
-        context.read<NavigationStateManager>().showAddJob(true);
+        context
+            .read<NavigationBloc>()
+            .add(const NavigationEvent.showAddJob(true));
       },
     );
   }

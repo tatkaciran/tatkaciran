@@ -30,7 +30,7 @@ dependencies:
   auto_animated: ^3.0.0
   bloc: ^8.0.2
   cached_network_image: ^3.2.0
-  chats_repository: 
+  chats_repository:
     path: packages/chats_repository
   cloud_firestore: ^3.1.6
   connectivity: ^3.0.6
@@ -53,11 +53,12 @@ dependencies:
   fluttertoast: ^8.0.8
   font_awesome_flutter: ^9.0.0
   formz: ^0.4.0
+  freezed_annotation: ^1.1.0
   geocoding: ^2.0.0
+  geolocator: ^8.0.3
   geopoint_repository:
     path: packages/geopoint_repository
-  geolocator: ^8.0.3
-  glass_kit: ^2.0.0 
+  glass_kit: ^2.0.0
   go_router: ^3.0.1
   google_fonts: ^2.1.0
   google_maps_flutter: ^2.0.4
@@ -89,9 +90,9 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.0.2
+  build_runner: ^2.1.7
   flutter_lints: ^1.0.4
-  flutter_test:
-    sdk: flutter
+  freezed: ^1.1.1
   mockito: ^5.0.2
 
 # For information on the generic Dart part of this file, see the

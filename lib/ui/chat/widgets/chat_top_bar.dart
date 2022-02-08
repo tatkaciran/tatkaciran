@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/ui/home/blocs/blocs.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,9 @@ class BackButton extends StatelessWidget {
     return IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          context.read<NavigationStateManager>().showChat(false);
+          context
+              .read<NavigationBloc>()
+              .add(const NavigationEvent.showChat(false));
         });
   }
 }

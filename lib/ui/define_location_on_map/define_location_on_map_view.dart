@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/config/managers/managers.dart';
 import 'package:instajobs/constants/extensions/extensions.dart';
 
@@ -86,7 +87,10 @@ class SaveCurrentLocationOnMapButtonView extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 _manager.locationManagerInitialize;
-                context.read<NavigationStateManager>().setHome(true);
+                //    context
+                // .read<NavigationBloc>()
+                // .add(const NavigationEvent.showChat(showChat));
+                Navigator.pop(context);
               },
               child: const Text('Konumu Kaydet'),
             ),
