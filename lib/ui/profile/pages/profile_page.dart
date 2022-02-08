@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/config/managers/managers.dart';
 import 'package:instajobs/constants/extensions/extensions.dart';
 import 'package:instajobs/ui/app_preferences/app_preferences.dart';
@@ -57,7 +58,9 @@ class _ProfilePageState extends State<ProfilePage>
         break;
     }
 
-    context.read<NavigationStateManager>().goToProfileTab(tab);
+    context
+        .read<NavigationBloc>()
+        .add(NavigationEvent.showProfile(true, tab: tab));
   }
 
   @override

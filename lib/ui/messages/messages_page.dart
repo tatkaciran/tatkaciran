@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:instajobs/config/managers/chat_manager.dart';
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
 import 'package:instajobs/ui/auth/auth.dart';
 import 'package:instajobs/ui/chat/chat.dart';
@@ -86,7 +85,9 @@ class MessageItems extends StatelessWidget {
     return ListTile(
       onTap: () {
         context.read<ChatManager>().fromMessagesToChat(context, message!);
-        context.read<NavigationStateManager>().showChat(true);
+        context
+            .read<NavigationBloc>()
+            .add(const NavigationEvent.showChat(true));
       },
       leading: const Avatar(),
       title: Text(message?.displayName ?? '').fontSize(17),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/config/managers/navigation_state_manager.dart';
+import 'package:instajobs/config/config.dart';
 import 'package:instajobs/ui/add_job/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -139,7 +139,9 @@ class AddJobPageWidgets {
           padding: const EdgeInsets.only(top: 40.0, bottom: 40),
           child: GestureDetector(
             onTap: () {
-              context.read<NavigationStateManager>().showAddJob(false);
+              context
+                  .read<NavigationBloc>()
+                  .add(const NavigationEvent.showAddJob(false));
             },
             child: SizedBox(
               height: 8,

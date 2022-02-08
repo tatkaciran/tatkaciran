@@ -3,7 +3,6 @@ import 'package:instajobs/utils/utils.dart';
 
 import 'package:provider/provider.dart';
 import 'config/config.dart';
-import 'config/navigation/app_router.dart';
 import 'main_bloc_providers.dart';
 
 import 'constants/constants.dart';
@@ -36,6 +35,8 @@ class AppView extends StatefulWidget {
 class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
+    final Stream<AuthenticationState> _authenticationStream =
+        context.watch<AuthenticationBloc>().stream;
     return MultiProvider(
       providers: [
         // ChangeNotifierProvider(
@@ -47,8 +48,10 @@ class _AppViewState extends State<AppView> {
             ..setThemeRepository(HiveThemeRepository())
             ..initializeTheme(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => NavigationStateManager(),
+        BlocProvider(
+          create: (context) =>
+              NavigationBloc(authenticationStream: _authenticationStream)
+                ..add(const NavigationEvent.initialize(true)),
         ),
         ChangeNotifierProvider(
           create: (context) => ChatManager(),
@@ -73,14 +76,7 @@ class Appp extends StatefulWidget {
 }
 
 class _ApppState extends State<Appp> {
-  // AddJobManager _addJobManager;
-  // ProfileManager _profileManager;
-  late AppStateManager _appStateManager;
-  late ChatManager _chatManager;
-
   late AppRouter _appRouter;
-
-  late NavigationStateManager _navigationStateManager;
 
   @override
   void initState() {
@@ -91,16 +87,11 @@ class _ApppState extends State<Appp> {
   Widget build(BuildContext context) {
     // _addJobManager = context.watch<AddJobManager>();
     // _profileManager = context.watch<ProfileManager>();
-    _appStateManager = context.watch<AppStateManager>();
-    _chatManager = context.watch<ChatManager>();
-    _navigationStateManager = context.watch<NavigationStateManager>();
-    _navigationStateManager.setManagers(
-      appStateManager: _appStateManager,
-      chatManager: _chatManager,
-    );
-    _appRouter = AppRouter(
-      manager: _navigationStateManager,
-    );
+    // _appStateManager = context.watch<AppStateManager>();
+    // _chatManager = context.watch<ChatManager>();
+    NavigationState _navigationbloc = context.watch<NavigationBloc>().state;
+
+    _appRouter = AppRouter(navigationState: _navigationbloc);
     return MaterialApp.router(
       supportedLocales: const [
         Locale('en', ''), // Turkish, no country code

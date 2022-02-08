@@ -63,7 +63,7 @@ class JobItemManager extends ChangeNotifier {
   EdgeInsets get applyButtonPadding => const EdgeInsets.only(bottom: 6.0);
   void applyButtonOnPressed(BuildContext context) {
     context.read<ChatManager>().fromJobToChat(context, _job);
-    context.read<NavigationStateManager>().showChat(true);
+    context.read<NavigationBloc>().add(const NavigationEvent.showChat(true));
     notifyListeners();
   }
 
