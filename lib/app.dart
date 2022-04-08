@@ -7,8 +7,8 @@ import 'main_bloc_providers.dart';
 
 import 'constants/constants.dart';
 import 'l10n/l10n.dart';
-import 'ui/app_preferences/managers/managers.dart';
-import 'ui/auth/auth.dart';
+import 'presentation/app_preferences/managers/managers.dart';
+import 'presentation/auth/auth.dart';
 
 class App extends StatelessWidget {
   const App({required this.authenticationRepository, Key? key})

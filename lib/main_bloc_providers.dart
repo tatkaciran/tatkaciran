@@ -1,15 +1,15 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:chats_repository/chats_repository.dart';
-import 'package:instajobs/ui/messages/blocs/blocs.dart';
+import 'package:instajobs/presentation/messages/blocs/blocs.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 import 'package:messages_repository/messages_repository.dart';
 
 import 'constants/constants.dart';
-import 'ui/add_job/blocs/blocs.dart';
-import 'ui/auth/blocs/blocs.dart';
-import 'ui/chat/chat.dart';
-import 'ui/chat/blocs/chats/chats_bloc.dart';
-import 'ui/home/blocs/blocs.dart';
+import 'presentation/add_job/blocs/blocs.dart';
+import 'presentation/auth/blocs/blocs.dart';
+import 'presentation/chat/chat.dart';
+import 'presentation/chat/blocs/chats/chats_bloc.dart';
+import 'presentation/home/blocs/blocs.dart';
 
 class MainProviders extends StatelessWidget {
   const MainProviders(

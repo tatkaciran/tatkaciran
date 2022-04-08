@@ -1,9 +1,9 @@
 import 'package:instajobs/constants/constants.dart';
-import 'package:instajobs/ui/auth/auth.dart';
-import 'package:instajobs/ui/chat/blocs/chats/chats_bloc.dart';
-import 'package:instajobs/ui/chat/chat.dart';
-import 'package:instajobs/ui/home/blocs/blocs.dart';
-import 'package:instajobs/ui/messages/blocs/blocs.dart';
+import 'package:instajobs/presentation/auth/auth.dart';
+import 'package:instajobs/presentation/chat/blocs/chats/chats_bloc.dart';
+import 'package:instajobs/presentation/chat/chat.dart';
+import 'package:instajobs/presentation/home/blocs/blocs.dart';
+import 'package:instajobs/presentation/messages/blocs/blocs.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 import 'package:messages_repository/messages_repository.dart';
 

@@ -1,14 +1,14 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:instajobs/ui/add_job/add_job.dart';
-import 'package:instajobs/ui/app_preferences/app_preferences.dart';
-import 'package:instajobs/ui/auth/auth.dart';
-import 'package:instajobs/ui/chat/chat.dart';
-import 'package:instajobs/ui/define_location/define_location.dart';
-import 'package:instajobs/ui/home/home.dart';
-import 'package:instajobs/ui/messages/messages.dart';
-import 'package:instajobs/ui/splash/splash.dart';
-import 'package:instajobs/ui/profile/profile.dart';
+import 'package:instajobs/presentation/add_job/add_job.dart';
+import 'package:instajobs/presentation/app_preferences/app_preferences.dart';
+import 'package:instajobs/presentation/auth/auth.dart';
+import 'package:instajobs/presentation/chat/chat.dart';
+import 'package:instajobs/presentation/define_location/define_location.dart';
+import 'package:instajobs/presentation/home/home.dart';
+import 'package:instajobs/presentation/messages/messages.dart';
+import 'package:instajobs/presentation/splash/splash.dart';
+import 'package:instajobs/presentation/profile/profile.dart';
 
 class Routes {
   static GoRoute get splash => GoRoute(

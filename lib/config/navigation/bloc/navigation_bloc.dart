@@ -1,6 +1,6 @@
 import 'package:instajobs/config/config.dart';
 
-import '../../../ui/auth/auth.dart';
+import '../../../presentation/auth/auth.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   final Stream<AuthenticationState> _authenticationStream;
