@@ -7,9 +7,9 @@ part 'jobs_event.dart';
 part 'jobs_state.dart';
 
 class JobsBloc extends Bloc<JobsEvent, JobsState> {
-  final JobsRepository _jobsRepository;
+  final JobsRepository<Job> _jobsRepository;
 
-  JobsBloc({required JobsRepository jobsRepository})
+  JobsBloc({required JobsRepository<Job> jobsRepository})
       : _jobsRepository = jobsRepository,
         super(const JobsState.loading()) {
     on<LoadJobs>(_onLoadJobs);
@@ -22,7 +22,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   }
 
   _onLoadJobs(LoadJobs event, Emitter<JobsState> emit) async {
-    Stream<List<Job>> _streamJobs = _jobsRepository.jobs();
+    Stream<List<Job>> _streamJobs = await _jobsRepository.jobs();
     await for (List<Job> _jobs in _streamJobs) {
       emit(JobsState.loaded(_jobs));
       // add(JobsUpdated(_jobs));

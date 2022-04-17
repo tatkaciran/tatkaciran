@@ -1,6 +1,4 @@
 library jobs_repository;
 
-export 'src/firebase_jobs_repository.dart';
-export 'src/jobs_repository.dart';
-export 'src/models/models.dart';
-export 'src/entities/entities.dart';
+export 'src/data/data.dart';
+export 'src/domain/domain.dart';

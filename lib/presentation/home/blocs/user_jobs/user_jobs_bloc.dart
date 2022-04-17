@@ -7,9 +7,9 @@ part 'user_jobs_event.dart';
 part 'user_jobs_state.dart';
 
 class UserJobsBloc extends Bloc<UserJobsEvent, UserJobsState> {
-  final JobsRepository _userJobsRepository;
+  final JobsRepository<Job> _userJobsRepository;
 
-  UserJobsBloc({required JobsRepository jobsRepository})
+  UserJobsBloc({required JobsRepository<Job> jobsRepository})
       : _userJobsRepository = jobsRepository,
         super(const UserJobsState.loading()) {
     on<LoadUserJobs>(_onLoadMyJobs);

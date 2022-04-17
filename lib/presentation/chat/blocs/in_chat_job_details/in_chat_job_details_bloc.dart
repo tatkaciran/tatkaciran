@@ -21,7 +21,7 @@ class InChatJobDetailsBloc
         .snapshots()
         .listen(
       (doc) {
-        Job job = Job.fromEntity(JobEntity.fromSnapshot(doc));
+        Job job = Job.fromSnapshot(doc);
         add(SetJob(job));
       },
       cancelOnError: true,

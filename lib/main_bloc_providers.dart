@@ -21,6 +21,10 @@ class MainProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<DataSource<Job>> dataSources = [
+      LocalMemoryJobsDataSource<Job>(),
+      FirebaseJobsDataSource<Job>(),
+    ];
     return RepositoryProvider.value(
       value: authenticationRepository,
       child: MultiBlocProvider(
@@ -38,8 +42,9 @@ class MainProviders extends StatelessWidget {
               create: (_) =>
                   ChatsBloc(chatsRepository: FirebaseChatsRepository())),
           BlocProvider<JobsBloc>(
-            create: (_) => JobsBloc(jobsRepository: FirebaseJobsRepository())
-              ..add(const LoadJobs()),
+            create: (_) =>
+                JobsBloc(jobsRepository: JobsRepositoryImpl<Job>(dataSources))
+                  ..add(const LoadJobs()),
           ),
 
           BlocProvider<IsEditingBloc>(create: (context) => IsEditingBloc()),

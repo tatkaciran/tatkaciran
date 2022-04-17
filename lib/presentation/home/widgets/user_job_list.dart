@@ -14,11 +14,15 @@ class UserJobList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<DataSource<Job>> dataSources = [
+      LocalMemoryJobsDataSource<Job>(),
+      FirebaseJobsDataSource<Job>(),
+    ];
     final _userID =
         context.select((AuthenticationBloc bloc) => bloc.state.user.id);
     return BlocProvider<UserJobsBloc>(
       create: (context) =>
-          UserJobsBloc(jobsRepository: FirebaseJobsRepository())
+          UserJobsBloc(jobsRepository: JobsRepositoryImpl<Job>(dataSources))
             ..add(LoadUserJobs(uid: _userID)),
       child: Builder(
         builder: (context) {
