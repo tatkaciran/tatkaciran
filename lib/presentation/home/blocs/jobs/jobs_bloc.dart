@@ -7,10 +7,19 @@ part 'jobs_event.dart';
 part 'jobs_state.dart';
 
 class JobsBloc extends Bloc<JobsEvent, JobsState> {
-  final JobsRepository<Job> _jobsRepository;
-
-  JobsBloc({required JobsRepository<Job> jobsRepository})
-      : _jobsRepository = jobsRepository,
+  final GetJobsUseCase<Job> _getJobsUseCase;
+  final AddNewJobUseCase<Job> _addNewJobUseCase;
+  final DeleteJobUseCase<Job> _deleteJobUseCase;
+  final UpdateJobUseCase<Job> _updateJobUseCase;
+  JobsBloc({
+    required GetJobsUseCase<Job> getJobsUseCase,
+    required AddNewJobUseCase<Job> addNewJobUseCase,
+    required DeleteJobUseCase<Job> deleteJobUseCase,
+    required UpdateJobUseCase<Job> updateJobUseCase,
+  })  : _getJobsUseCase = getJobsUseCase,
+        _addNewJobUseCase = addNewJobUseCase,
+        _deleteJobUseCase = deleteJobUseCase,
+        _updateJobUseCase = updateJobUseCase,
         super(const JobsState.loading()) {
     on<LoadJobs>(_onLoadJobs);
     on<AddJob>(_onAddJob);
@@ -22,7 +31,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   }
 
   _onLoadJobs(LoadJobs event, Emitter<JobsState> emit) async {
-    Stream<List<Job>> _streamJobs = await _jobsRepository.jobs();
+    Stream<List<Job>> _streamJobs = await _getJobsUseCase(NoParams());
     await for (List<Job> _jobs in _streamJobs) {
       emit(JobsState.loaded(_jobs));
       // add(JobsUpdated(_jobs));
@@ -30,17 +39,18 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   }
 
   _onAddJob(AddJob event, Emitter<JobsState> emit) {
-    _jobsRepository.addNewJob(
-      event.job,
-    );
+    var _addNewJobUseCaseParams = AddNewJobUseCaseParams(job: event.job);
+    _addNewJobUseCase(_addNewJobUseCaseParams);
   }
 
   _onUpdateJob(UpdateJob event, Emitter<JobsState> emit) {
-    _jobsRepository.updateJob(event.updatedJob);
+    var _updateJobUseCaseParams = UpdateJobUseCaseParams(job: event.updatedJob);
+    _updateJobUseCase(_updateJobUseCaseParams);
   }
 
   _onDeleteJob(DeleteJob event, Emitter<JobsState> emit) {
-    _jobsRepository.deleteJob(event.job);
+    var _deleteJobUseCaseParams = DeleteJobUseCaseParams(job: event.job);
+    _deleteJobUseCase(_deleteJobUseCaseParams);
   }
 
   _onHiddenAll(HiddenAll event, Emitter<JobsState> emit) {
@@ -53,7 +63,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
             ))
         .toList();
     for (var updatedJob in updatedJobs) {
-      _jobsRepository.updateJob(updatedJob);
+      var _updateJobUseCaseParams =
+          UpdateJobUseCaseParams<Job>(job: updatedJob);
+      _updateJobUseCase(_updateJobUseCaseParams);
     }
   }
 
@@ -63,7 +75,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     final List<Job?> completedJobs =
         currentState.jobs!.where((job) => job!.isHidden!).toList();
     for (var completedJob in completedJobs) {
-      _jobsRepository.deleteJob(completedJob!);
+      var _deleteJobUseCaseParams =
+          DeleteJobUseCaseParams<Job>(job: completedJob!);
+      _deleteJobUseCase(_deleteJobUseCaseParams);
     }
   }
 

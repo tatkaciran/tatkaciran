@@ -37,31 +37,41 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     final Stream<AuthenticationState> _authenticationStream =
         context.watch<AuthenticationBloc>().stream;
+
+    var _themeManagerChangeNotifierProvider = ChangeNotifierProvider(
+      create: (context) => ThemeManager()
+        ..setThemeRepository(HiveThemeRepository())
+        ..initializeTheme(),
+    );
+
+    var _navigationBlocProvider = BlocProvider(
+      create: (context) =>
+          NavigationBloc(authenticationStream: _authenticationStream)
+            ..add(const NavigationEvent.initialize(true)),
+    );
+
+    var _chatManagerChangeNotifierProvider = ChangeNotifierProvider(
+      create: (context) => ChatManager(),
+    );
+
+    var _profileManagerChangeNotifierProvider = ChangeNotifierProvider(
+      create: (context) => ProfileManager(),
+    );
+
+    var _appStateManagerChangeNotifierProvider = ChangeNotifierProvider(
+      create: (context) => AppStateManager(),
+    );
+
     return MultiProvider(
       providers: [
         // ChangeNotifierProvider(
         //   create: (context) => AddJobManager(),
         // ),
-
-        ChangeNotifierProvider(
-          create: (context) => ThemeManager()
-            ..setThemeRepository(HiveThemeRepository())
-            ..initializeTheme(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              NavigationBloc(authenticationStream: _authenticationStream)
-                ..add(const NavigationEvent.initialize(true)),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ChatManager(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ProfileManager(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => AppStateManager(),
-        ),
+        _themeManagerChangeNotifierProvider,
+        _navigationBlocProvider,
+        _chatManagerChangeNotifierProvider,
+        _profileManagerChangeNotifierProvider,
+        _appStateManagerChangeNotifierProvider,
       ],
       child: const Appp(),
     );

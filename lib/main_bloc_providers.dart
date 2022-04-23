@@ -22,41 +22,70 @@ class MainProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<DataSource<Job>> dataSources = [
+    final List<DataSource<Job>> _dataSources = [
       localJobsMemoryDataSource,
       localJobsHiveDataSource,
       remoteJobsFirebaseDataSource,
     ];
+
+    var _jobsRepository = JobsRepositoryImpl<Job>(_dataSources);
+
+    var _jobsBloc = JobsBloc(
+      getJobsUseCase: GetJobsUseCase(_jobsRepository),
+      addNewJobUseCase: AddNewJobUseCase(_jobsRepository),
+      deleteJobUseCase: DeleteJobUseCase(_jobsRepository),
+      updateJobUseCase: UpdateJobUseCase(_jobsRepository),
+    );
+
+    var _jobsBlocProvider = BlocProvider<JobsBloc>(
+      create: (_) => _jobsBloc..add(const LoadJobs()),
+    );
+
+    var _authenticationBlocProvider = BlocProvider(
+      create: (_) => AuthenticationBloc(
+          authenticationRepository: authenticationRepository),
+    );
+
+    var _messagesBlocProvider = BlocProvider<MessagesBloc>(
+        create: (_) => MessagesBloc(
+              messagesRepository: FirebaseMessagesRepository(),
+            ));
+
+    var _chatsBlocProvider = BlocProvider<ChatsBloc>(
+        create: (_) => ChatsBloc(chatsRepository: FirebaseChatsRepository()));
+
+    var _isEditingBlocProvider =
+        BlocProvider<IsEditingBloc>(create: (context) => IsEditingBloc());
+
+    var _jobBlocProvider = BlocProvider<JobBloc>(create: (_) => JobBloc());
+
+    var _jobIdAndEmployeeIdBlocProvider = BlocProvider<JobIdAndEmployeeIdBloc>(
+        create: (_) => JobIdAndEmployeeIdBloc());
+
+    var _inChatJobDetailsBlocProvider = BlocProvider<InChatJobDetailsBloc>(
+        create: (_) => InChatJobDetailsBloc());
+
+    var _denemeJobBlocProvider =
+        BlocProvider<DenemeJobBloc>(create: (_) => DenemeJobBloc());
+
+    var _jobIdBlocProvider =
+        BlocProvider<JobIdBloc>(create: (_) => JobIdBloc());
+
     return RepositoryProvider.value(
       value: authenticationRepository,
       child: MultiBlocProvider(
         providers: [
           //! TODO:  gereksiz providerları yerine taşı
-          BlocProvider(
-              create: (_) => AuthenticationBloc(
-                  authenticationRepository: authenticationRepository)),
-
-          BlocProvider<MessagesBloc>(
-              create: (_) => MessagesBloc(
-                    messagesRepository: FirebaseMessagesRepository(),
-                  )),
-          BlocProvider<ChatsBloc>(
-              create: (_) =>
-                  ChatsBloc(chatsRepository: FirebaseChatsRepository())),
-          BlocProvider<JobsBloc>(
-            create: (_) =>
-                JobsBloc(jobsRepository: JobsRepositoryImpl<Job>(dataSources))
-                  ..add(const LoadJobs()),
-          ),
-
-          BlocProvider<IsEditingBloc>(create: (context) => IsEditingBloc()),
-          BlocProvider<JobBloc>(create: (_) => JobBloc()),
-          BlocProvider<JobIdAndEmployeeIdBloc>(
-              create: (_) => JobIdAndEmployeeIdBloc()),
-          BlocProvider<InChatJobDetailsBloc>(
-              create: (_) => InChatJobDetailsBloc()),
-          BlocProvider<DenemeJobBloc>(create: (_) => DenemeJobBloc()),
-          BlocProvider<JobIdBloc>(create: (_) => JobIdBloc()),
+          _authenticationBlocProvider,
+          _messagesBlocProvider,
+          _chatsBlocProvider,
+          _jobsBlocProvider,
+          _isEditingBlocProvider,
+          _jobBlocProvider,
+          _jobIdAndEmployeeIdBlocProvider,
+          _inChatJobDetailsBlocProvider,
+          _denemeJobBlocProvider,
+          _jobIdBlocProvider,
         ],
         child: child,
       ),
