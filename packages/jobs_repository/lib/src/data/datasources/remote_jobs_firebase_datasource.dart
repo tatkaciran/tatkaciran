@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 
-class FirebaseJobsDataSource<T extends JobEntity> implements DataSource<T> {
+class RemoteJobsFirebaseDataSource<T extends JobEntity>
+    implements DataSource<T> {
   final jobCollection = FirebaseFirestore.instance.collection('jobs');
 
   @override
   Future<void> addNewJob(T job) {
+    print('''job cached in Remote-Jobs-Firebase-DataSource''');
     return jobCollection.add((job as Job).toDocument());
   }
 
@@ -17,6 +19,7 @@ class FirebaseJobsDataSource<T extends JobEntity> implements DataSource<T> {
 
   @override
   Future<Stream<List<T>>> jobs() async {
+    print('get Jobs in Remote-Jobs-Firebase-DataSource');
     return _jobsStream();
   }
 

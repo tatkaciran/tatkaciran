@@ -15,8 +15,9 @@ class UserJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<DataSource<Job>> dataSources = [
-      LocalMemoryJobsDataSource<Job>(),
-      FirebaseJobsDataSource<Job>(),
+      LocalJobsMemoryDataSource<Job>(),
+      LocalJobsHiveDataSource<Job>(),
+      RemoteJobsFirebaseDataSource<Job>(),
     ];
     final _userID =
         context.select((AuthenticationBloc bloc) => bloc.state.user.id);

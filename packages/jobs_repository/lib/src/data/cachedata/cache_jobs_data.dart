@@ -22,9 +22,7 @@ class CacheJobsData<T extends JobEntity> extends CacheData<T> {
   Future<Stream<List<T>>> cacheJobsAndRetriveCachedJobs() async {
     sourcesLoop:
     for (final source in _sources) {
-      if (!isMatchedSource(source)) {
-        print('\n if source didnt match then add source in empty source ');
-        print(source.type);
+      if (!isMatchedSource(source, RequestType.any)) {
         _cachedSources.add(source);
         continue;
       }

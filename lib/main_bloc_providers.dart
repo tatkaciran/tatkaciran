@@ -22,8 +22,9 @@ class MainProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<DataSource<Job>> dataSources = [
-      LocalMemoryJobsDataSource<Job>(),
-      FirebaseJobsDataSource<Job>(),
+      LocalJobsMemoryDataSource<Job>(),
+      LocalJobsHiveDataSource<Job>(),
+      RemoteJobsFirebaseDataSource<Job>(),
     ];
     return RepositoryProvider.value(
       value: authenticationRepository,

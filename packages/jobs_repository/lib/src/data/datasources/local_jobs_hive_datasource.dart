@@ -1,12 +1,12 @@
 import 'package:jobs_repository/jobs_repository.dart';
 
-class LocalMemoryJobsDataSource<T extends JobEntity> implements DataSource<T> {
-  LocalMemoryJobsDataSource();
+class LocalJobsHiveDataSource<T extends JobEntity> implements DataSource<T> {
+  LocalJobsHiveDataSource();
 
   final Map<String, T> _items = <String, T>{};
   @override
   Future<void> addNewJob(T job) async {
-    print('''job cached in LocalMemoryJobsDataSource''');
+    print('''job cached in Local-Jobs-Hive-DataSource''');
     _items[job.jobID] = job;
   }
 
@@ -15,13 +15,13 @@ class LocalMemoryJobsDataSource<T extends JobEntity> implements DataSource<T> {
 
   @override
   Future<Stream<List<T>>> jobs() async {
+    print('get Jobs in Local-Jobs-Hive-DataSource');
     Stream<List<T>> jobsStream = Stream<List<T>>.value(_items.values.toList());
     return jobsStream;
   }
 
   @override
   Stream<List<T>> myJobs({required String uid}) async* {
-    // print('LocalMemoryJobsDataSource myJobs cached');
     yield _items.values.toList();
   }
 
