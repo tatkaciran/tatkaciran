@@ -83,15 +83,12 @@ class LocationManager {
         _isLocationDefined = true;
       }
     }
-
-    print('Location status: $_isLocationDefined');
   }
 
   void _getLatLngFromHive() {
     _lat = _userBox.get('lat', defaultValue: 0.0);
     _lng = _userBox.get('lng', defaultValue: 0.0);
     _latLng = LatLng(_lat!, _lng!);
-    print('getted LatLng from Hive : $latLng');
   }
 
   Future<void> setLatLngToHive(LatLng? latLng) async {

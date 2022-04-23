@@ -28,17 +28,14 @@ class JobsRepositoryImpl<T extends JobEntity> implements JobsRepository<T> {
   @override
   Future<void> deleteJob(T job) async {
     for (var source in _sources) {
-      return source.addNewJob(job);
+      return source.deleteJob(job);
     }
   }
 
   @override
   Future<Stream<List<T>>> jobs() async {
-    Stream<List<T>> jobs = Stream<List<T>>.empty();
-    for (var source in _sources) {
-      jobs = await source.jobs();
-    }
-    return jobs;
+    CacheJobsData<T> _cacheJobsData = CacheJobsData<T>(_sources);
+    return await _cacheJobsData.cacheJobsAndRetriveCachedJobs();
   }
 
   @override

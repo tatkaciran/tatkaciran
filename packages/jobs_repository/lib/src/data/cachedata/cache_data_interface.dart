@@ -1,0 +1,1 @@
+abstract class CacheData<T> {}

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glass_kit/glass_kit.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:instajobs/config/config.dart';
-import 'package:instajobs/config/managers/managers.dart';
+
 import 'package:instajobs/constants/extensions/extensions.dart';
 import 'package:instajobs/presentation/app_preferences/app_preferences.dart';
 import 'package:instajobs/presentation/messages/messages.dart';

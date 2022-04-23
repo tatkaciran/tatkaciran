@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:geocoding/geocoding.dart';
+
 import 'package:instajobs/config/managers/managers.dart';
 
 class DefineLocationButtonManager extends ChangeNotifier {
@@ -25,8 +25,6 @@ class DefineLocationButtonManager extends ChangeNotifier {
 
   Future<void> getCurrentPlace() async {
     await _addressManager.getCurrentPlace();
-
-    print(_addressManager.placemark.toString());
 
     notifyListeners();
   }

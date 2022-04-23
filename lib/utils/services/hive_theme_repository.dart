@@ -19,7 +19,6 @@ class HiveThemeRepository implements ThemeRepository {
   @override
   bool theme() {
     bool theme = _userBox.get(_theme, defaultValue: false);
-    print('Hive Theme Repository: ' + theme.toString());
     return theme;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/extensions/extensions.dart';
 import 'package:instajobs/presentation/auth/auth.dart';

@@ -16,24 +16,8 @@ import 'app.dart';
 import 'constants/constants.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  GeocodingGetCurrentAddress? geocodingGetCurrentAddress;
-  await geocodingGetCurrentAddress?.getCurrentAddress(LatLng(35, 32));
+  await MainInitializer().load();
 
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
-  //   overlays: [SystemUiOverlay.top]);
-  FlutterError.onError = (details) {
-    print(details.exceptionAsString());
-    print(details.stack.toString());
-  };
-  final Directory tempDir = await getApplicationDocumentsDirectory();
-  final String _hiveTempPath = tempDir.path;
-  await Hive.initFlutter(_hiveTempPath);
-  await Hive.openBox('users');
-  await Firebase.initializeApp();
-
-  EquatableConfig.stringify = kDebugMode;
-  // Bloc.observer = SimpleBlocObserver();
   runZonedGuarded(
       () => runApp(
             App(
@@ -43,4 +27,27 @@ void main() async {
     print(error.toString());
     print(stackTrace.toString());
   });
+}
+
+class MainInitializer {
+  Future<void> load() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    GeocodingGetCurrentAddress? geocodingGetCurrentAddress;
+    await geocodingGetCurrentAddress?.getCurrentAddress(LatLng(35, 32));
+
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
+    //   overlays: [SystemUiOverlay.top]);
+    FlutterError.onError = (details) {
+      print(details.exceptionAsString());
+      print(details.stack.toString());
+    };
+    final Directory tempDir = await getApplicationDocumentsDirectory();
+    final String _hiveTempPath = tempDir.path;
+    await Hive.initFlutter(_hiveTempPath);
+    await Hive.openBox('users');
+    await Firebase.initializeApp();
+
+    EquatableConfig.stringify = kDebugMode;
+    // Bloc.observer = SimpleBlocObserver();}
+  }
 }

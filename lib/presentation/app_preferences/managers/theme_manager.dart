@@ -21,7 +21,7 @@ class ThemeManager extends ChangeNotifier {
     _isThemeLight = _themeRepository.theme();
 
     !_isThemeLight ? _themeDark() : _themeLight();
-    print('initialize Theme ' + _isThemeLight.toString());
+
     notifyListeners();
   }
 
