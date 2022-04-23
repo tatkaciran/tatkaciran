@@ -1,15 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'dart:io';
-
-import 'package:address_repository/address_repository.dart';
-import 'package:equatable/equatable.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jobs_repository/jobs_repository.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'main_initializer.dart';
