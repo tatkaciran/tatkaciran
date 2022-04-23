@@ -5,6 +5,7 @@ import 'package:jobs_repository/jobs_repository.dart';
 import 'package:messages_repository/messages_repository.dart';
 
 import 'constants/constants.dart';
+import 'main.dart';
 import 'presentation/add_job/blocs/blocs.dart';
 import 'presentation/auth/blocs/blocs.dart';
 import 'presentation/chat/chat.dart';
@@ -22,9 +23,9 @@ class MainProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<DataSource<Job>> dataSources = [
-      LocalJobsMemoryDataSource<Job>(),
-      LocalJobsHiveDataSource<Job>(),
-      RemoteJobsFirebaseDataSource<Job>(),
+      localJobsMemoryDataSource,
+      localJobsHiveDataSource,
+      remoteJobsFirebaseDataSource,
     ];
     return RepositoryProvider.value(
       value: authenticationRepository,

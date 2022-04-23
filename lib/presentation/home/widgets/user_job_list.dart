@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:instajobs/main.dart';
 import 'package:instajobs/presentation/auth/auth.dart';
 
 import 'package:instajobs/presentation/home/home.dart';
@@ -15,9 +16,9 @@ class UserJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<DataSource<Job>> dataSources = [
-      LocalJobsMemoryDataSource<Job>(),
-      LocalJobsHiveDataSource<Job>(),
-      RemoteJobsFirebaseDataSource<Job>(),
+      localJobsMemoryDataSource,
+      localJobsHiveDataSource,
+      remoteJobsFirebaseDataSource,
     ];
     final _userID =
         context.select((AuthenticationBloc bloc) => bloc.state.user.id);
