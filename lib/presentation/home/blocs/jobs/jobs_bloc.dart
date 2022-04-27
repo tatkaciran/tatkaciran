@@ -1,10 +1,25 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 part 'jobs_event.dart';
 part 'jobs_state.dart';
+
+class JobsPresenter {
+  BlocProvider<JobsBloc> blocProvider(List<DataSource<Job>> sources) {
+    var _jobsRepository = JobsRepositoryImpl<Job>(sources);
+    var _jobsBloc = JobsBloc(
+      getJobsUseCase: GetJobsUseCase(_jobsRepository),
+      addNewJobUseCase: AddNewJobUseCase(_jobsRepository),
+      deleteJobUseCase: DeleteJobUseCase(_jobsRepository),
+      updateJobUseCase: UpdateJobUseCase(_jobsRepository),
+    );
+    return BlocProvider<JobsBloc>(
+      create: (_) => _jobsBloc..add(const LoadJobs()),
+    );
+  }
+}
 
 class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final GetJobsUseCase<Job> _getJobsUseCase;

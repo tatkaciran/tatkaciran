@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,17 +47,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _jobsRepository = JobsRepositoryImpl<Job>(jobsDataSources);
-    var _jobsBloc = JobsBloc(
-      getJobsUseCase: GetJobsUseCase(_jobsRepository),
-      addNewJobUseCase: AddNewJobUseCase(_jobsRepository),
-      deleteJobUseCase: DeleteJobUseCase(_jobsRepository),
-      updateJobUseCase: UpdateJobUseCase(_jobsRepository),
-    );
-
-    var _jobsBlocProvider = BlocProvider<JobsBloc>(
-      create: (_) => _jobsBloc..add(const LoadJobs()),
-    );
+    var _jobsBlocProvider = JobsPresenter().blocProvider(jobsDataSources);
 
     var _authenticationBlocProvider = BlocProvider(
       create: (_) => AuthenticationBloc(

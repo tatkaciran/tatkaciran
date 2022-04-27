@@ -28,7 +28,7 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   auto_animated: ^3.0.0
-  bloc: ^8.0.2
+  bloc: ^8.0.3
   cached_network_image: ^3.2.0
   chats_repository:
     path: packages/chats_repository
@@ -89,7 +89,7 @@ dependencies:
   uuid: ^3.0.1
 
 dev_dependencies:
-  bloc_test: ^9.0.2
+  bloc_test: ^9.0.3
   build_runner: ^2.1.7
   flutter_lints: ^1.0.4
   freezed: ^1.1.1
