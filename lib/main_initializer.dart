@@ -9,11 +9,13 @@ import 'package:jobs_repository/jobs_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'constants/constants.dart';
+import 'presentation/auth/auth.dart';
 
 late LocalJobsHiveDataSource<Job> localJobsHiveDataSource;
 late LocalJobsMemoryDataSource<Job> localJobsMemoryDataSource;
 late RemoteJobsFirebaseDataSource<Job> remoteJobsFirebaseDataSource;
 late List<DataSource<Job>> jobsDataSources;
+late AuthUser user;
 
 class MainInitializer {
   _hiveInit() async {

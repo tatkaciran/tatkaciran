@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/extensions/extensions.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/auth/auth.dart';
 import 'package:instajobs/presentation/home/home.dart';
 import 'package:intl/intl.dart';
@@ -17,11 +18,10 @@ class JobItemManager extends ChangeNotifier {
   Job get job => _job;
 
   //! User ID
-  String uuID(BuildContext context) =>
-      context.select((AuthenticationBloc bloc) => bloc.state.user.id);
+  String userId = user.id;
 
   //! Is equal User ID with Job User ID?
-  bool isUser(BuildContext context) => _job.userID == uuID(context);
+  bool isUser(BuildContext context) => _job.userID == userId;
 
   //! Expiry Date View
   String get expiryDateLabel => 'Son ${_job.expiryDate} gün';

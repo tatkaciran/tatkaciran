@@ -1,4 +1,5 @@
 import 'package:instajobs/config/config.dart';
+import 'package:instajobs/main_initializer.dart';
 
 import '../../../presentation/auth/auth.dart';
 
@@ -61,6 +62,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         emit(state.copyWith(isInitialized: true));
       }
       if (auth.status == AuthenticationStatus.authenticated) {
+        user = auth.user;
         emit(state.copyWith(isInitialized: true, isLoggedIn: true));
       }
     }

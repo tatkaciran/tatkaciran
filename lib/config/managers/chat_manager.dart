@@ -1,5 +1,5 @@
 import 'package:instajobs/constants/constants.dart';
-import 'package:instajobs/presentation/auth/auth.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/chat/blocs/chats/chats_bloc.dart';
 import 'package:instajobs/presentation/chat/chat.dart';
 import 'package:instajobs/presentation/home/blocs/blocs.dart';
@@ -16,16 +16,8 @@ class ChatManager extends ChangeNotifier {
   }
 
   void fromJobToChat(BuildContext context, Job job) {
-    final String userID =
-        BlocProvider.of<AuthenticationBloc>(context, listen: false)
-            .state
-            .user
-            .id;
-    final String displayName =
-        BlocProvider.of<AuthenticationBloc>(context, listen: false)
-            .state
-            .user
-            .name!;
+    final String userID = user.id;
+    final String displayName = user.name!;
     //
     //
     // Chat load bloc employeeID != userID
@@ -52,11 +44,7 @@ class ChatManager extends ChangeNotifier {
   }
 
   void fromMessagesToChat(BuildContext context, Message message) {
-    final String userID =
-        BlocProvider.of<AuthenticationBloc>(context, listen: false)
-            .state
-            .user
-            .id;
+    final String userID = user.id;
 
     message.seen?.remove(userID);
     BlocProvider.of<MessagesBloc>(context, listen: false).add(

@@ -117,6 +117,7 @@ class _ProfilePageState extends State<ProfilePage>
           appBar: PreferredSize(
             preferredSize: const Size(0, 120),
             child: AppBar(
+              backgroundColor: Colors.transparent,
               iconTheme:
                   IconThemeData(color: Theme.of(context).iconTheme.color),
               elevation: 0.0,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
-import 'package:instajobs/presentation/auth/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/messages/blocs/blocs.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +14,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final double _width = MediaQuery.of(context).size.width;
 
-    final String userID = context.watch<AuthenticationBloc>().state.user.id;
+    final String userID = user.id;
 
     return ElevatedButton(
       style: HomeAppBarWidgets.buttonStyle(_width),
@@ -54,7 +54,6 @@ class HomeAppBarWidgets {
   }
 
   static Text buildUsername(BuildContext context) {
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Text(
       user.name!,
       style: TextStyle(

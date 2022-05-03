@@ -6,18 +6,29 @@ import 'package:instajobs/presentation/auth/auth.dart';
 import 'package:instajobs/presentation/home/home.dart';
 import 'package:jobs_repository/jobs_repository.dart';
 
-class JobList extends StatelessWidget {
+class JobList extends StatefulWidget {
   final ScrollController? scrollController;
   final SliverOverlapAbsorberHandle? nestedScrollView;
 
   const JobList({Key? key, this.scrollController, this.nestedScrollView})
       : super(key: key);
+
+  @override
+  State<JobList> createState() => _JobListState();
+}
+
+class _JobListState extends State<JobList> {
+  late JobsState _state;
+  @override
+  void didChangeDependencies() {
+    _state = context.watch<JobsBloc>().state;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    JobsState _state = context.watch<JobsBloc>().state;
-
-    if (_state is! JobsState) return _buildJobsFailedToLoad();
-    if (_state is JobsState) return _buildJobsLoaded(_state);
+    if (_state.jobs == null) return _buildJobsFailedToLoad();
+    if (_state.jobs != null) return _buildJobsLoaded(_state);
     return const Text('JobsBloc not working!');
   }
 
@@ -66,7 +77,7 @@ class JobList extends StatelessWidget {
       child: _buildAnimationLimiter(
         CustomScrollView(
           slivers: [
-            SliverOverlapInjector(handle: nestedScrollView!),
+            SliverOverlapInjector(handle: widget.nestedScrollView!),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (_, index) => _buildAnimationConfigurationStaggeredList(
@@ -101,7 +112,7 @@ class JobList extends StatelessWidget {
         promptAnimationType: PromptAnimation.fade,
         promptAlignment: Alignment.bottomRight,
         promptDuration: const Duration(milliseconds: 100),
-        scrollController: scrollController!,
+        scrollController: widget.scrollController!,
         promptReplacementBuilder: (context, function) {
           return Padding(
             padding: const EdgeInsets.only(right: 16.0, bottom: 85),

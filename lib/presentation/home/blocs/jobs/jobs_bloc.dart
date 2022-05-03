@@ -7,7 +7,7 @@ part 'jobs_event.dart';
 part 'jobs_state.dart';
 
 class JobsPresenter {
-  BlocProvider<JobsBloc> blocProvider(List<DataSource<Job>> sources) {
+  JobsBloc jobsBloc(List<DataSource<Job>> sources) {
     var _jobsRepository = JobsRepositoryImpl<Job>(sources);
     var _jobsBloc = JobsBloc(
       getJobsUseCase: GetJobsUseCase(_jobsRepository),
@@ -15,9 +15,7 @@ class JobsPresenter {
       deleteJobUseCase: DeleteJobUseCase(_jobsRepository),
       updateJobUseCase: UpdateJobUseCase(_jobsRepository),
     );
-    return BlocProvider<JobsBloc>(
-      create: (_) => _jobsBloc..add(const LoadJobs()),
-    );
+    return _jobsBloc;
   }
 }
 

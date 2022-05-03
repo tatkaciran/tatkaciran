@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instajobs/constants/extensions/extensions.dart';
-import 'package:instajobs/presentation/auth/auth.dart';
+import 'package:instajobs/main_initializer.dart';
 
 class GreetingView extends StatelessWidget {
   const GreetingView({
@@ -9,11 +9,7 @@ class GreetingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String _userName = context
-        .select((AuthenticationBloc bloc) => bloc.state.user)
-        .name!
-        .split(' ')
-        .first;
+    final String _userName = user.name!.split(' ').first;
     return RichText(
       text: TextSpan(
         style: context.theme.textTheme.headline4,

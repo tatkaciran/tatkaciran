@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/auth/auth.dart';
 import 'package:instajobs/presentation/chat/chat.dart';
 import 'package:instajobs/presentation/messages/blocs/blocs.dart';
@@ -80,7 +81,7 @@ class MessageItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //! USER ID
-    final String _userID = context.watch<AuthenticationBloc>().state.user.id;
+    final String _userID = user.id;
 
     return ListTile(
       onTap: () {

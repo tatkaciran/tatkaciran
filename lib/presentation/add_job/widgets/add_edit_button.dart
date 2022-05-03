@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/add_job/blocs/blocs.dart';
 import 'package:instajobs/presentation/auth/blocs/blocs.dart';
 import 'package:instajobs/presentation/home/blocs/blocs.dart';
@@ -14,8 +15,6 @@ class AddEditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isEditing = context
         .select((IsEditingBloc bloc) => (bloc.state as GetIsEditing).isEditing);
-
-    final user = context.watch<AuthenticationBloc>().state.user;
 
     // final String getAddress = context
     //     .select((AddressBloc bloc) => (bloc.state as GetAddress).address);

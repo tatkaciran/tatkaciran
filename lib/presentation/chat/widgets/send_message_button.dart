@@ -2,6 +2,7 @@
 
 import 'package:chats_repository/chats_repository.dart';
 import 'package:instajobs/constants/constants.dart';
+import 'package:instajobs/main_initializer.dart';
 import 'package:instajobs/presentation/auth/blocs/blocs.dart';
 import 'package:instajobs/presentation/chat/blocs/chats/chats_bloc.dart';
 import 'package:instajobs/presentation/chat/chat.dart';
@@ -16,13 +17,6 @@ class SendMessageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // JOB
     // Job job = context.select((JobBloc bloc) => (bloc.state as GetJobState).job);
-
-    // USER
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
-
-    // USER ID
-    // final String _userID =
-    context.select((AuthenticationBloc bloc) => bloc.state.user).id;
 
     // CONTENT
     final String content = context
@@ -43,7 +37,7 @@ class SendMessageButton extends StatelessWidget {
     // EMPLOYER ID
     final String _employerID = context.select((JobIdAndEmployeeIdBloc bloc) =>
         (bloc.state as GetJobIDAndEmployeeID).employerID);
-    final String userID = context.watch<AuthenticationBloc>().state.user.id;
+    final String userID = user.id;
     return TextButton(
       child: const Icon(Icons.send),
       onPressed: () {

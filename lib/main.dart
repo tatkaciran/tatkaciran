@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'package:flutter/foundation.dart';
-import 'package:jobs_repository/jobs_repository.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'main_initializer.dart';
@@ -47,7 +45,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _jobsBlocProvider = JobsPresenter().blocProvider(jobsDataSources);
+    BlocProvider<JobsBloc> _jobsBlocProvider = BlocProvider<JobsBloc>(
+      create: (_) =>
+          JobsPresenter().jobsBloc(jobsDataSources)..add(const LoadJobs()),
+    );
 
     var _authenticationBlocProvider = BlocProvider(
       create: (_) => AuthenticationBloc(
@@ -73,12 +74,6 @@ class App extends StatelessWidget {
     var _inChatJobDetailsBlocProvider = BlocProvider<InChatJobDetailsBloc>(
         create: (_) => InChatJobDetailsBloc());
 
-    var _denemeJobBlocProvider =
-        BlocProvider<DenemeJobBloc>(create: (_) => DenemeJobBloc());
-
-    var _jobIdBlocProvider =
-        BlocProvider<JobIdBloc>(create: (_) => JobIdBloc());
-
     return RepositoryProvider.value(
       value: authenticationRepository,
       child: MultiProvider(
@@ -92,8 +87,6 @@ class App extends StatelessWidget {
           _jobBlocProvider,
           _jobIdAndEmployeeIdBlocProvider,
           _inChatJobDetailsBlocProvider,
-          _denemeJobBlocProvider,
-          _jobIdBlocProvider,
         ],
         child: Builder(builder: (context) {
           final Stream<AuthenticationState> _authenticationStream =
@@ -119,9 +112,8 @@ class App extends StatelessWidget {
             create: (context) => ProfileManager(),
           );
 
-          var _appStateManagerChangeNotifierProvider = ChangeNotifierProvider(
-            create: (context) => AppStateManager(),
-          );
+          var _appStateManagerChangeNotifierProvider =
+              ChangeNotifierProvider(create: (context) => AppStateManager());
           return MultiProvider(
             providers: [
               //! TODO:  gereksiz providerları yerine taşı
@@ -157,10 +149,6 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    // _addJobManager = context.watch<AddJobManager>();
-    // _profileManager = context.watch<ProfileManager>();
-    // _appStateManager = context.watch<AppStateManager>();
-    // _chatManager = context.watch<ChatManager>();
     NavigationState _navigationbloc = context.watch<NavigationBloc>().state;
 
     _appRouter = AppRouter(navigationState: _navigationbloc);
@@ -175,10 +163,7 @@ class _AppViewState extends State<AppView> {
       debugShowCheckedModeBanner: false,
       themeMode: context.watch<ThemeManager>().themeMode,
       theme: ThemePreset.flexlight,
-      // The Mandy red, dark theme.
       darkTheme: ThemePreset.flexDarkBlue,
-      // theme: ThemePreset.light,
-      // darkTheme: ThemePreset.darkBlue,
       title: 'InstaJobs',
       backButtonDispatcher: RootBackButtonDispatcher(),
       routeInformationParser: _appRouter.router.routeInformationParser,

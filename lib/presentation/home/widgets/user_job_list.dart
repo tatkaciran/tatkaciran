@@ -16,8 +16,7 @@ class UserJobList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _userID =
-        context.select((AuthenticationBloc bloc) => bloc.state.user.id);
+    final _userID = user.id;
     return BlocProvider<UserJobsBloc>(
       create: (context) =>
           UserJobsBloc(jobsRepository: JobsRepositoryImpl<Job>(jobsDataSources))

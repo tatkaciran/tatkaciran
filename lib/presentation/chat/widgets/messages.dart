@@ -3,8 +3,8 @@ import 'package:chats_repository/chats_repository.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:instajobs/constants/constants.dart';
+import 'package:instajobs/main_initializer.dart';
 
-import 'package:instajobs/presentation/auth/auth.dart';
 import 'package:instajobs/presentation/chat/blocs/chats/chats_bloc.dart';
 import 'package:instajobs/presentation/home/widgets/widgets.dart';
 
@@ -19,12 +19,11 @@ class ChatMessages extends StatelessWidget {
   Widget build(BuildContext context) {
     ChatsState state = context.watch<ChatsBloc>().state;
 
-    // USER
-    final _user = context.select((AuthenticationBloc bloc) => bloc.state.user);
+    while (state is ChatsNotLoaded || state is ChatsLoading) {
+      return const NoChatMessage();
+    }
 
-    if (state is! ChatsLoaded) return const NoChatMessage();
-
-    if (state is ChatsLoaded) {
+    while (state is ChatsLoaded) {
       //     Job job = context
 
       return Expanded(
@@ -41,7 +40,7 @@ class ChatMessages extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   Chat _chat = state.chats[index];
                   String _senderID = _chat.senderID;
-                  String _userID = _user.id;
+                  String _userID = user.id;
                   return _senderID == _userID
                       ? MessageTile(
                           chat: _chat,

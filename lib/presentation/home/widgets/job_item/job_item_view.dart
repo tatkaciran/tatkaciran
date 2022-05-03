@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/constants/extensions/extensions.dart';
+
 import 'package:jobs_repository/jobs_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +24,12 @@ class JobItem extends StatelessWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 colors: [
-                  context.theme.highlightColor,
-                  context.theme.highlightColor.withOpacity(0.03),
-                  context.theme.highlightColor,
+                  Colors.white.withOpacity(0.010),
+                  Colors.white.withOpacity(0.000),
+                  Colors.white.withOpacity(0.010),
                 ],
               ),
             ),
