@@ -101,7 +101,7 @@ class AppRouter {
         Routes.login,
         Routes.home,
       ],
-      errorPageBuilder: (context, state) {
+      errorPageBuilder: (c, state) {
         return MaterialPage(
             child: Scaffold(
           body: Center(

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/home/widgets/job_item/job_item.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class JobItemSalaryView extends StatelessWidget {
-  const JobItemSalaryView({Key? key}) : super(key: key);
+  const JobItemSalaryView({Key? key, required this.salary}) : super(key: key);
+  final String salary;
 
   @override
   Widget build(BuildContext context) {
-    JobItemManager _manager = context.watch<JobItemManager>();
+    final salaryFormat = NumberFormat("###,###.###");
+
+    String _salaryText =
+        salaryFormat.format(int.parse(salary.replaceAll('.', '')).truncate());
+
+    String salaryLabel = '$_salaryText TL';
+
     return Text(
-      _manager.salaryLabel,
+      salaryLabel,
       textScaleFactor: 1.30,
     );
   }

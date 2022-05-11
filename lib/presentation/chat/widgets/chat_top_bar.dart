@@ -12,7 +12,7 @@ class ChatAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Job job = context.select((JobBloc bloc) => bloc.state);
+    Job job = context.select((JobCubit bloc) => bloc.state);
 
     return Padding(
       padding: padding,
@@ -46,9 +46,7 @@ class BackButton extends StatelessWidget {
     return IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          context
-              .read<NavigationBloc>()
-              .add(const NavigationEvent.showChat(false));
+          context.read<NavigationCubit>().showChat(false);
         });
   }
 }

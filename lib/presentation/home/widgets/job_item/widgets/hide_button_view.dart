@@ -1,17 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/home/widgets/job_item/job_item.dart';
+import 'package:instajobs/presentation/home/blocs/blocs.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 import 'package:provider/provider.dart';
 
 class JobItemHideButtonView extends StatelessWidget {
-  const JobItemHideButtonView({Key? key}) : super(key: key);
+  final Job job;
+  const JobItemHideButtonView({Key? key, required this.job}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    JobItemManager _manager = context.watch<JobItemManager>();
     return TextButton.icon(
-      icon: Icon(_manager.hideButtonIcon),
-      onPressed: () => _manager.hideButtonOnPressed(context),
-      label: Text(_manager.hideButtonLabel),
+      icon: Icon(
+          job.isHidden! ? CupertinoIcons.eye_slash : CupertinoIcons.eye_fill),
+      onPressed: () => context.read<JobsBloc>().add(UpdateJob(job.copyWith(
+            isHidden: !job.isHidden!,
+          ))),
+      label: Text(job.isHidden! ? 'View Job' : 'Hide Job'),
     );
   }
 }

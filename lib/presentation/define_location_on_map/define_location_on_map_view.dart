@@ -10,12 +10,10 @@ import 'package:provider/provider.dart';
 
 import 'define_location_on_map.dart';
 
-class DefineLocationOnMapView extends StatelessWidget {
-  //! TODO: create find me button in map and when user click that button, update the camera position on where user current place in and set latlng,
-
-  const DefineLocationOnMapView({Key? key}) : super(key: key);
+class DefineLocationOnMap extends StatelessWidget {
+  const DefineLocationOnMap({Key? key}) : super(key: key);
   static MaterialPageRoute<void> route() => MaterialPageRoute(
-        builder: (context) => DefineLocationOnMapView(),
+        builder: (c) => DefineLocationOnMap(),
       );
 
   @override
@@ -35,45 +33,65 @@ class DefineLocationOnMapView extends StatelessWidget {
     );
 
     /// DEVICE SIZE
-    Size _deviceSize = context.deviceSize;
-    return ChangeNotifierProvider<DefineLocationOnMapManager>.value(
-      value: _defineLocationOnMapManager,
-      child: Builder(builder: (context) {
-        DefineLocationOnMapManager _manager =
-            context.watch<DefineLocationOnMapManager>();
 
-        return Scaffold(
-          body: SizedBox(
-            height: _deviceSize.height,
-            width: _deviceSize.width,
-            child: Stack(
-              children: [
-                GoogleMap(
-                  mapType: MapType.hybrid,
-                  mapToolbarEnabled: false,
-                  zoomControlsEnabled: false,
-                  initialCameraPosition: _manager.initialCameraPosition,
-                  onMapCreated: _manager.onMapCreated,
-                  onCameraIdle: _manager.pickLocationOnMap,
-                ),
-                const CenterMartker(),
-                SaveCurrentLocationOnMapButtonView()
-              ],
-            ),
-          ),
-        );
-      }),
+    return DefineLocationOnMapInit(
+      defineLocationOnMapManager: _defineLocationOnMapManager,
     );
   }
 }
 
-class SaveCurrentLocationOnMapButtonView extends StatelessWidget {
-  const SaveCurrentLocationOnMapButtonView({Key? key}) : super(key: key);
+class DefineLocationOnMapInit extends StatelessWidget {
+  final DefineLocationOnMapManager defineLocationOnMapManager;
+  const DefineLocationOnMapInit(
+      {Key? key, required this.defineLocationOnMapManager})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<DefineLocationOnMapManager>(
+      create: (context) => defineLocationOnMapManager,
+      child: DefineLocationOnMapView(),
+    );
+  }
+}
+
+class DefineLocationOnMapView extends StatelessWidget {
+  const DefineLocationOnMapView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     DefineLocationOnMapManager _manager =
         context.watch<DefineLocationOnMapManager>();
-    print('isCurrentLocationFind' + _manager.isCurrentLocationFind.toString());
+    Size _deviceSize = context.deviceSize;
+    return Scaffold(
+      body: SizedBox(
+        height: _deviceSize.height,
+        width: _deviceSize.width,
+        child: Stack(
+          children: [
+            GoogleMap(
+              mapType: MapType.hybrid,
+              mapToolbarEnabled: false,
+              zoomControlsEnabled: false,
+              initialCameraPosition: _manager.initialCameraPosition,
+              onMapCreated: _manager.onMapCreated,
+              onCameraIdle: _manager.pickLocationOnMap,
+            ),
+            const CenterMarker(),
+            DefineLocationOnMapBottomBar()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DefineLocationOnMapBottomBar extends StatelessWidget {
+  const DefineLocationOnMapBottomBar({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    DefineLocationOnMapManager _manager =
+        context.watch<DefineLocationOnMapManager>();
 
     return Positioned(
       left: 10,
@@ -84,48 +102,8 @@ class SaveCurrentLocationOnMapButtonView extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                _manager.locationManagerInitialize;
-                //    context
-                // .read<NavigationBloc>()
-                // .add(const NavigationEvent.showChat(showChat));
-                Navigator.pop(context);
-              },
-              child: const Text('Konumu Kaydet'),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: context.theme.buttonTheme.colorScheme?.primary,
-              ),
-              onPressed: () async {
-                await _manager.setCurrentLocationFind();
-              },
-              child: Row(
-                children: [
-                  _manager.isCurrentLocationFind
-                      ? Text(
-                          'Aranıyor...',
-                          style: context.theme.textTheme.bodyText1,
-                        )
-                      : Text(
-                          'Beni bul',
-                          style: context.theme.textTheme.bodyText1,
-                        ),
-                  Center(
-                    child: _manager.isCurrentLocationFind
-                        ? CircularProgressIndicator(
-                            color: context.theme.textTheme.bodyText1?.color,
-                          )
-                        : Icon(
-                            Icons.location_searching,
-                            color: Theme.of(context).textTheme.bodyText1?.color,
-                            size: 30,
-                          ),
-                  ),
-                ],
-              ),
-            ),
+            _SaveCurrentLatLngButton(manager: _manager),
+            _FindMeButton(manager: _manager),
           ],
         ),
       ),
@@ -133,8 +111,76 @@ class SaveCurrentLocationOnMapButtonView extends StatelessWidget {
   }
 }
 
-class CenterMartker extends StatelessWidget {
-  const CenterMartker({
+class _FindMeButton extends StatelessWidget {
+  const _FindMeButton({
+    Key? key,
+    required DefineLocationOnMapManager manager,
+  })  : _manager = manager,
+        super(key: key);
+
+  final DefineLocationOnMapManager _manager;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: context.theme.buttonTheme.colorScheme?.primary,
+      ),
+      onPressed: () async {
+        await _manager.setCurrentLocationFind();
+      },
+      child: Row(
+        children: [
+          _manager.isCurrentLocationFind
+              ? Text(
+                  'Aranıyor...',
+                  style: context.theme.textTheme.bodyText1,
+                )
+              : Text(
+                  'Beni bul',
+                  style: context.theme.textTheme.bodyText1,
+                ),
+          Center(
+            child: _manager.isCurrentLocationFind
+                ? CircularProgressIndicator(
+                    color: context.theme.textTheme.bodyText1?.color,
+                  )
+                : Icon(
+                    Icons.location_searching,
+                    color: Theme.of(context).textTheme.bodyText1?.color,
+                    size: 30,
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SaveCurrentLatLngButton extends StatelessWidget {
+  const _SaveCurrentLatLngButton({
+    Key? key,
+    required DefineLocationOnMapManager manager,
+  })  : _manager = manager,
+        super(key: key);
+
+  final DefineLocationOnMapManager _manager;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        _manager.locationManagerInitialize;
+
+        Navigator.pop(context);
+      },
+      child: const Text('Konumu Kaydet'),
+    );
+  }
+}
+
+class CenterMarker extends StatelessWidget {
+  const CenterMarker({
     Key? key,
   }) : super(key: key);
 

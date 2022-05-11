@@ -1,19 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/home/widgets/job_item/job_item.dart';
-import 'package:provider/provider.dart';
+import 'package:instajobs/config/config.dart';
+import 'package:instajobs/constants/constants.dart';
+import 'package:jobs_repository/jobs_repository.dart';
 
 class JobItemApplyButtonView extends StatelessWidget {
-  const JobItemApplyButtonView({Key? key}) : super(key: key);
+  final Job job;
+  const JobItemApplyButtonView({Key? key, required this.job}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    JobItemManager _manager = context.watch<JobItemManager>();
     return Padding(
-      padding: _manager.applyButtonPadding,
+      padding: const EdgeInsets.only(bottom: 6.0),
       child: ElevatedButton(
-        style: _manager.applyButtonStyle(context),
-        child: Text(_manager.applyButtonLabel),
-        onPressed: () => _manager.applyButtonOnPressed(context),
+        style: context.theme.elevatedButtonTheme.style,
+        child: const Text('Apply'),
+        onPressed: () {
+          context.read<ChatManager>().fromJobToChat(context, job);
+          context.read<NavigationCubit>().showChat(true);
+        },
       ),
     );
   }

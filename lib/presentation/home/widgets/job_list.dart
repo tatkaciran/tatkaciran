@@ -72,7 +72,7 @@ class _JobListState extends State<JobList> {
 
   Widget _buildJobsLoaded(JobsState state) {
     var _jobs = state.jobs?.where((job) => !job!.isHidden!).toList();
-    // TODO: separatorBuilder: (context, index) {return const SizedBox(width: 16);}
+    // TODO: separatorBuilder: (c, i) {return const SizedBox(width: 16);}
     return Expanded(
       child: _buildAnimationLimiter(
         CustomScrollView(
@@ -80,9 +80,9 @@ class _JobListState extends State<JobList> {
             SliverOverlapInjector(handle: widget.nestedScrollView!),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (_, index) => _buildAnimationConfigurationStaggeredList(
-                  index,
-                  child: JobItem(_jobs?[index] ?? Job.empty),
+                (_, i) => _buildAnimationConfigurationStaggeredList(
+                  i,
+                  child: JobItem(_jobs?[i] ?? Job.empty),
                 ),
                 childCount: _jobs?.length ?? 0,
               ),
@@ -93,10 +93,10 @@ class _JobListState extends State<JobList> {
     );
   }
 
-  AnimationConfiguration _buildAnimationConfigurationStaggeredList(int index,
+  AnimationConfiguration _buildAnimationConfigurationStaggeredList(int i,
           {required Widget child}) =>
       AnimationConfiguration.staggeredList(
-        position: index,
+        position: i,
         duration: const Duration(milliseconds: 500),
         child: SlideAnimation(
           verticalOffset: 50.0,
@@ -113,7 +113,7 @@ class _JobListState extends State<JobList> {
         promptAlignment: Alignment.bottomRight,
         promptDuration: const Duration(milliseconds: 100),
         scrollController: widget.scrollController!,
-        promptReplacementBuilder: (context, function) {
+        promptReplacementBuilder: (c, function) {
           return Padding(
             padding: const EdgeInsets.only(right: 16.0, bottom: 85),
             child: FloatingActionButton(
@@ -124,7 +124,7 @@ class _JobListState extends State<JobList> {
             ),
           );
         },
-        builder: (context, properties) => child,
+        builder: (c, properties) => child,
       ),
     );
   }

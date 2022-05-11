@@ -33,21 +33,18 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
         _addNewJobUseCase = addNewJobUseCase,
         _deleteJobUseCase = deleteJobUseCase,
         _updateJobUseCase = updateJobUseCase,
-        super(const JobsState.loading()) {
+        super(const JobsState.notLoaded()) {
     on<LoadJobs>(_onLoadJobs);
     on<AddJob>(_onAddJob);
     on<UpdateJob>(_onUpdateJob);
     on<DeleteJob>(_onDeleteJob);
-    on<HiddenAll>(_onHiddenAll);
-    on<ClearJobs>(_onClearJobs);
-    on<JobsUpdated>(_onJobsUpdate);
   }
 
   _onLoadJobs(LoadJobs event, Emitter<JobsState> emit) async {
+    emit(const JobsState.loading());
     Stream<List<Job>> _streamJobs = await _getJobsUseCase(NoParams());
     await for (List<Job> _jobs in _streamJobs) {
       emit(JobsState.loaded(_jobs));
-      // add(JobsUpdated(_jobs));
     }
   }
 
@@ -64,37 +61,5 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   _onDeleteJob(DeleteJob event, Emitter<JobsState> emit) {
     var _deleteJobUseCaseParams = DeleteJobUseCaseParams(job: event.job);
     _deleteJobUseCase(_deleteJobUseCaseParams);
-  }
-
-  _onHiddenAll(HiddenAll event, Emitter<JobsState> emit) {
-    final currentState = state;
-
-    final allHidden = currentState.jobs?.every((job) => job!.isHidden!);
-    final List<Job> updatedJobs = currentState.jobs!
-        .map((job) => job!.copyWith(
-              isHidden: !allHidden!,
-            ))
-        .toList();
-    for (var updatedJob in updatedJobs) {
-      var _updateJobUseCaseParams =
-          UpdateJobUseCaseParams<Job>(job: updatedJob);
-      _updateJobUseCase(_updateJobUseCaseParams);
-    }
-  }
-
-  _onClearJobs(ClearJobs event, Emitter<JobsState> emit) {
-    final currentState = state;
-
-    final List<Job?> completedJobs =
-        currentState.jobs!.where((job) => job!.isHidden!).toList();
-    for (var completedJob in completedJobs) {
-      var _deleteJobUseCaseParams =
-          DeleteJobUseCaseParams<Job>(job: completedJob!);
-      _deleteJobUseCase(_deleteJobUseCaseParams);
-    }
-  }
-
-  _onJobsUpdate(JobsUpdated event, Emitter<JobsState> emit) {
-    emit(JobsState.loaded(event.jobs));
   }
 }

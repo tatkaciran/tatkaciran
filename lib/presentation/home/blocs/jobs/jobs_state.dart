@@ -10,26 +10,3 @@ class JobsState {
   @override
   String toString() => 'Jobs { jobs: $jobs }';
 }
-
-// abstract class JobsState extends Equatable {
-//   const JobsState();
-
-//   @override
-//   List<Object> get props => [];
-// }
-
-// class JobsLoading extends JobsState {}
-
-// class JobsLoaded extends JobsState {
-//   final List<Job> jobs;
-
-//   const JobsLoaded([this.jobs = const []]);
-
-//   @override
-//   List<Object> get props => [jobs];
-
-//   @override
-//   String toString() => 'JobsLoaded { jobs: $jobs }';
-// }
-
-// class JobsNotLoaded extends JobsState {}

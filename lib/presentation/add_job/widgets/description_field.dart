@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instajobs/presentation/add_job/add_job_page_widgets.dart';
-import 'package:instajobs/presentation/add_job/blocs/blocs.dart';
+
+import 'add_job_items_description.dart';
+import 'add_job_items_title.dart';
+import 'add_job_text_form_field.dart';
 
 class DescriptionField extends StatelessWidget {
   const DescriptionField({Key? key}) : super(key: key);
@@ -11,11 +12,21 @@ class DescriptionField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
-        children: AddJobPageWidgets.descriptionFieldChildren(
-          onChanged: (value) => context
-              .read<DescriptionBloc>()
-              .add(AddDecription(description: value!)),
-        ),
+        children: [
+          const SizedBox(height: 50),
+          const AddJobItemsTitle('AÇIKLAMA'),
+          const SizedBox(height: 15),
+          const AddJobItemsDescription(
+            'İlanını verdiğiniz işi tanımlayan bir açıklama yazın.',
+          ),
+          AddJobTextFormField(
+              hintText: 'iş ilanı hakkında bilgi',
+              emptyFieldText: 'bu alan boş olamaz',
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
+              helperText: 'Örnek: İşimiz için Çalışacak eleman lazım',
+              onChanged: (x) => x),
+        ],
       ),
     );
   }

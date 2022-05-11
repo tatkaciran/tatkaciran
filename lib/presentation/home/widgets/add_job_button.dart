@@ -12,9 +12,7 @@ class AddJobButton extends StatelessWidget {
           Theme.of(context).floatingActionButtonTheme.foregroundColor,
       child: const Icon(Icons.add),
       onPressed: () {
-        context
-            .read<NavigationBloc>()
-            .add(const NavigationEvent.showAddJob(true));
+        context.read<NavigationCubit>().showAddJob(true);
       },
     );
   }

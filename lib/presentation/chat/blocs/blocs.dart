@@ -1,4 +1,4 @@
 export 'content/content_bloc.dart';
-export 'in_chat_job_details/in_chat_job_details_bloc.dart';
+export 'job_in_chat_bloc/job_in_chat.dart';
 
-export 'job_id_and_employee_id/job_id_and_employee_id_bloc.dart';
+export 'send_message_bloc/send_message_bloc.dart';

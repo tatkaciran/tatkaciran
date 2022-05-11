@@ -12,8 +12,8 @@ class AddJobManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void goToTab(index) {
-    _selectedTab = index;
+  void goToTab(i) {
+    _selectedTab = i;
     notifyListeners();
   }
 

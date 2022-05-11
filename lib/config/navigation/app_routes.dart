@@ -14,33 +14,32 @@ class Routes {
   static GoRoute get splash => GoRoute(
         path: '/splash',
         name: 'splash-page',
-        pageBuilder: (context, state) => SplashPage.page(key: state.pageKey),
+        pageBuilder: (c, state) => SplashPage.page(key: state.pageKey),
       );
 
   static GoRoute get login => GoRoute(
         path: '/login',
         name: 'login-page',
-        pageBuilder: (context, state) => LoginPage.page(key: state.pageKey),
+        pageBuilder: (c, state) => LoginPage.page(key: state.pageKey),
       );
 
   static GoRoute get defineLocationPage => GoRoute(
         path: '/defineLocation',
         name: 'define-location',
-        pageBuilder: (context, state) =>
-            DefineLocationView.page(key: state.pageKey),
+        pageBuilder: (c, state) => DefineLocationView.page(key: state.pageKey),
       );
 
   static GoRoute get home => GoRoute(
         path: '/',
         name: 'home-page',
-        pageBuilder: (context, state) => HomePage.page(key: state.pageKey),
+        pageBuilder: (c, state) => HomePage.page(key: state.pageKey),
         routes: [profile],
       );
 
   static GoRoute get profile => GoRoute(
         path: 'profile/:tab',
         name: 'profile-page',
-        pageBuilder: (context, state) {
+        pageBuilder: (c, state) {
           int tab;
           switch (state.params['tab']) {
             case 'myjobs':
@@ -66,7 +65,7 @@ class Routes {
   // static GoRoute get profile => GoRoute(
   //       path: 'profile/:tab',
   //       name: 'profile-page',
-  //       pageBuilder: (context, state) {
+  //       pageBuilder: (c, state) {
   //         int tab;
   //         switch (state.params['tab']) {
   //           case 'myjobs':
@@ -93,30 +92,29 @@ class Routes {
   static GoRoute get myJobs => GoRoute(
       path: 'myjobs',
       name: 'my-jobs-page',
-      pageBuilder: (context, state) => Jobs.page(key: state.pageKey),
+      pageBuilder: (c, state) => Jobs.page(key: state.pageKey),
       routes: [addJob]);
 
   static GoRoute get addJob => GoRoute(
         path: 'addjob',
         name: 'add-job-page',
-        pageBuilder: (context, state) => AddJobScreen.page(key: state.pageKey),
+        pageBuilder: (c, state) => AddJobScreen.page(key: state.pageKey),
       );
   static GoRoute get messages => GoRoute(
       path: 'messages',
       name: 'messages-page',
-      pageBuilder: (context, state) => Messages.page(key: state.pageKey),
+      pageBuilder: (c, state) => Messages.page(key: state.pageKey),
       routes: [chat]);
 
   static GoRoute get chat => GoRoute(
         path: 'chat',
         name: 'chat-page',
-        pageBuilder: (context, state) => ChatPage.page(key: state.pageKey),
+        pageBuilder: (c, state) => ChatPage.page(key: state.pageKey),
       );
 
   static GoRoute get app => GoRoute(
         path: 'app',
         name: 'app-page',
-        pageBuilder: (context, state) =>
-            AppSettingsPage.page(key: state.pageKey),
+        pageBuilder: (c, state) => AppPreferences.page(key: state.pageKey),
       );
 }

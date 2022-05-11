@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/home/widgets/job_item/job_item.dart';
-import 'package:provider/provider.dart';
 
 class JobItemExpiryDateView extends StatelessWidget {
-  const JobItemExpiryDateView({Key? key}) : super(key: key);
-
+  const JobItemExpiryDateView({Key? key, required this.expiryDate})
+      : super(key: key);
+  final int expiryDate;
   @override
   Widget build(BuildContext context) {
-    JobItemManager _manager = context.watch<JobItemManager>();
     return Text(
-      _manager.expiryDateLabel,
+      'Son $expiryDate gün',
       textScaleFactor: 1.20,
     );
   }

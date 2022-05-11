@@ -17,24 +17,25 @@ class UserJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _userID = user.id;
-    return BlocProvider<UserJobsBloc>(
-      create: (context) =>
-          UserJobsBloc(jobsRepository: JobsRepositoryImpl<Job>(jobsDataSources))
-            ..add(LoadUserJobs(uid: _userID)),
+    return BlocProvider<UserJobsCubit>(
+      create: (c) => UserJobsCubit(
+        getJobsByIdUseCase: GetJobsByIdUseCase(
+          JobsRepositoryImpl<Job>(jobsDataSources),
+        ),
+      )..add(_userID),
       child: Builder(
         builder: (context) {
-          final UserJobsState _state = context.watch<UserJobsBloc>().state;
+          final List<Job> _jobs = context.watch<UserJobsCubit>().state;
 
-          if (_state.jobs == []) return const NoJobs();
-          return _buildJobsLoaded(_state);
+          if (_jobs.isNotEmpty) return _buildJobsLoaded(_jobs);
+          return const NoJobs();
         },
       ),
     );
   }
 
-  UserJobs _buildJobsLoaded(UserJobsState _state) {
-    var userJobs = _state.jobs;
-    return UserJobs(userJobs);
+  UserJobs _buildJobsLoaded(List<Job> _jobs) {
+    return UserJobs(_jobs);
   }
 }
 
@@ -61,15 +62,15 @@ class UserJobs extends StatelessWidget {
               controller: _controller,
               itemCount: userJobs.length,
               physics: _bouncingScrollPhysics,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (BuildContext context, int i) {
                 const duration2 = Duration(milliseconds: 800);
                 return AnimationConfiguration.staggeredList(
-                  position: index,
+                  position: i,
                   duration: duration2,
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
-                      child: JobItem(userJobs[index]),
+                      child: JobItem(userJobs[i]),
                     ),
                   ),
                 );
@@ -101,7 +102,7 @@ class UserJobs extends StatelessWidget {
       promptAnimationType: PromptAnimation.fade,
       promptAlignment: Alignment.bottomRight,
       promptDuration: duration,
-      promptReplacementBuilder: (context, function) {
+      promptReplacementBuilder: (c, function) {
         return Padding(
           padding: edgeInsets,
           child: FloatingActionButton(
@@ -114,7 +115,7 @@ class UserJobs extends StatelessWidget {
         );
       },
       scrollController: controller,
-      builder: (context, properties) => child,
+      builder: (c, properties) => child,
     );
   }
 }

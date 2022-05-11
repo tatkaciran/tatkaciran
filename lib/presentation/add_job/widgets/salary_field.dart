@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/add_job/add_job_page_widgets.dart';
-import 'package:instajobs/presentation/add_job/blocs/blocs.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'add_job_items_description.dart';
+import 'add_job_items_title.dart';
+import 'add_job_text_form_field.dart';
 
 class SalaryField extends StatelessWidget {
   const SalaryField({Key? key}) : super(key: key);
@@ -11,11 +12,21 @@ class SalaryField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
-        children: AddJobPageWidgets.salaryFieldChildren(
-          onChanged: (value) {
-            context.read<SalaryBloc>().add(AddSalary(salary: value!));
-          },
-        ),
+        children: [
+          const SizedBox(height: 50),
+          const AddJobItemsTitle('ÜCRET'),
+          const SizedBox(height: 15),
+          const AddJobItemsDescription(
+            'İlanını verdiğiniz iş için ne kadar ücret ödeyeceksiniz?',
+          ),
+          AddJobTextFormField(
+            hintText: 'ücret',
+            emptyFieldText: 'ücret girmelisiniz',
+            keyboardType: TextInputType.number,
+            helperText: 'Örnek: 150',
+            onChanged: (x) => x,
+          ),
+        ],
       ),
     );
   }

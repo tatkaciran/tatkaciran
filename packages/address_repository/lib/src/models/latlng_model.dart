@@ -1,7 +1,11 @@
 /// Coordinates in Degrees.
 class LatLng {
-  double latitude;
-  double longitude;
+  final double latitude;
+  final double longitude;
 
-  LatLng(this.latitude, this.longitude);
+  const LatLng(this.latitude, this.longitude);
+
+  const LatLng.zero()
+      : latitude = 0,
+        longitude = 0;
 }

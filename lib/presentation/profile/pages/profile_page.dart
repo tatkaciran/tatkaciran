@@ -14,9 +14,10 @@ import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key, this.tab}) : super(key: key);
+
   static Page page({LocalKey? key, int? tab}) => CustomTransitionPage<void>(
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(opacity: animation, child: child),
+        transitionsBuilder: (_, a, a2, c) =>
+            FadeTransition(opacity: a, child: c),
         key: key,
         child: ProfilePage(tab: tab),
       );
@@ -58,9 +59,7 @@ class _ProfilePageState extends State<ProfilePage>
         break;
     }
 
-    context
-        .read<NavigationBloc>()
-        .add(NavigationEvent.showProfile(true, tab: tab));
+    context.read<NavigationCubit>().showProfile(true, tab: tab);
   }
 
   @override
@@ -160,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage>
             children: const [
               Jobs(),
               Messages(),
-              AppSettingsPage(),
+              AppPreferences(),
             ],
           ),
         );

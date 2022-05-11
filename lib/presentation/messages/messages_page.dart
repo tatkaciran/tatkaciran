@@ -3,7 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:instajobs/config/config.dart';
 import 'package:instajobs/constants/constants.dart';
 import 'package:instajobs/main_initializer.dart';
-import 'package:instajobs/presentation/auth/auth.dart';
+
 import 'package:instajobs/presentation/chat/chat.dart';
 import 'package:instajobs/presentation/messages/blocs/blocs.dart';
 import 'package:messages_repository/messages_repository.dart';
@@ -48,15 +48,15 @@ class LoadedMessages extends StatelessWidget {
               parent: AlwaysScrollableScrollPhysics()),
           shrinkWrap: true,
           itemCount: messages?.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (BuildContext context, int i) {
             //! MESSAGE
-            Message message = messages![index]!;
+            Message message = messages![i]!;
             //! IS CURRENT USER
             // bool isCurrentUser = message.employeeID == _userID ||
             //         message.employerID == _userID ??
             //     true;
             return AnimationConfiguration.staggeredList(
-              position: index,
+              position: i,
               duration: const Duration(milliseconds: 450),
               child: SlideAnimation(
                 verticalOffset: 50.0,
@@ -86,9 +86,7 @@ class MessageItems extends StatelessWidget {
     return ListTile(
       onTap: () {
         context.read<ChatManager>().fromMessagesToChat(context, message!);
-        context
-            .read<NavigationBloc>()
-            .add(const NavigationEvent.showChat(true));
+        context.read<NavigationCubit>().showChat(true);
       },
       leading: const Avatar(),
       title: Text(message?.displayName ?? '').fontSize(17),

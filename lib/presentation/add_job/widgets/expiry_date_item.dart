@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/add_job/blocs/blocs.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExpiryDateItem extends StatelessWidget {
   final bool isSelected;
@@ -17,11 +15,7 @@ class ExpiryDateItem extends StatelessWidget {
           decoration: _boxDecoration(),
           child: IconButton(
             padding: const EdgeInsets.all(0),
-            onPressed: () {
-              context
-                  .read<ExpiryDateBloc>()
-                  .add(AddExpiryDate(expiryDate: date.toString()));
-            },
+            onPressed: () {},
             icon: Text(
               '$date',
               textScaleFactor: 1.5,

@@ -18,7 +18,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    context.read<NavigationBloc>().add(const NavigationEvent.initialize(true));
+
+    context.read<NavigationCubit>().initialize(true);
   }
 
   @override
@@ -31,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AddJobManager(),
+          create: (c) => AddJobManager(),
         ),
       ],
       child: Scaffold(

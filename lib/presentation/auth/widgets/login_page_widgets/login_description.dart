@@ -16,53 +16,81 @@ class LoginDescription extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Insta-Job',
-                  style: GoogleFonts.righteous(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: width / 8,
-                    ),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: width / 60,
-                ),
-                Text(
-                  'Anlık iş bulma uygulaması',
-                  style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: width / 19,
-                    ),
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(
-                  height: width / 10,
-                ),
-                Text(
-                  '''
-[  Garson, dağıtım elemanı, 
-   boyacı, şoför, kurye, usta,
-   mutfak personeli, vs.  ]''',
-                  style: GoogleFonts.mali(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: width / 17,
-                    ),
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(
-                  height: width / 18,
-                ),
+                _LoginPageTitle(width: width),
+                SizedBox(height: width / 60),
+                _LofinPageTitle2(width: width),
+                SizedBox(height: width / 10),
+                _LoginPageDescription(width: width),
+                SizedBox(height: width / 18),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LoginPageDescription extends StatelessWidget {
+  const _LoginPageDescription({Key? key, required this.width})
+      : super(key: key);
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '''
+[  Garson, dağıtım elemanı, 
+   boyacı, şoför, kurye, usta,
+   mutfak personeli, vs.  ]''',
+      style: GoogleFonts.mali(
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: width / 17,
+        ),
+      ),
+      textAlign: TextAlign.left,
+    );
+  }
+}
+
+class _LofinPageTitle2 extends StatelessWidget {
+  const _LofinPageTitle2({Key? key, required this.width}) : super(key: key);
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Anlık iş bulma uygulaması',
+      style: GoogleFonts.montserrat(
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: width / 19,
+        ),
+      ),
+      textAlign: TextAlign.left,
+    );
+  }
+}
+
+class _LoginPageTitle extends StatelessWidget {
+  const _LoginPageTitle({Key? key, required this.width}) : super(key: key);
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Insta-Job',
+      style: GoogleFonts.righteous(
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: width / 8,
+        ),
+      ),
+      textAlign: TextAlign.center,
     );
   }
 }

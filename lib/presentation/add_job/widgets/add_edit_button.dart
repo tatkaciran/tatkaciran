@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/main_initializer.dart';
-import 'package:instajobs/presentation/add_job/blocs/blocs.dart';
-import 'package:instajobs/presentation/auth/blocs/blocs.dart';
-import 'package:instajobs/presentation/home/blocs/blocs.dart';
-import 'package:jobs_repository/jobs_repository.dart';
-import 'package:uuid/uuid.dart';
 
 class AddEditButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -13,21 +7,6 @@ class AddEditButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isEditing = context
-        .select((IsEditingBloc bloc) => (bloc.state as GetIsEditing).isEditing);
-
-    // final String getAddress = context
-    //     .select((AddressBloc bloc) => (bloc.state as GetAddress).address);
-
-    final String getDescription = context.select(
-        (DescriptionBloc bloc) => (bloc.state as GetDescription).description);
-
-    final int getExpiryDate = context.select(
-        (ExpiryDateBloc bloc) => (bloc.state as GetExpiryDate).expiryDate);
-
-    final String getSalary =
-        context.select((SalaryBloc bloc) => (bloc.state as GetSalary).salary);
-
     return Padding(
       padding: margin,
       child: ElevatedButton(
@@ -37,20 +16,6 @@ class AddEditButton extends StatelessWidget {
         ),
         onPressed: () async {
           if (formKey.currentState!.validate()) {
-            context.read<JobsBloc>().add(
-                  AddJob(
-                    Job(
-                      photo: user.photo,
-                      jobID: const Uuid().v4(),
-                      userID: user.id,
-                      description: getDescription,
-                      salary: getSalary,
-                      expiryDate: getExpiryDate,
-                      userName: user.name!,
-                      isHidden: isEditing,
-                    ),
-                  ),
-                );
             // _isEditing = false;
             Navigator.pop(context);
           }

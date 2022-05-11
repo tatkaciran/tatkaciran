@@ -20,10 +20,10 @@ class SendMessageFormField extends StatelessWidget {
           filled: true,
         ),
         onChanged: (value) {
-          context.read<ContentBloc>().add(SetContent(value));
+          context.read<ContentBloc>().add(value);
         },
         onFieldSubmitted: (value) {
-          context.read<ContentBloc>().add(SetContent(value));
+          context.read<ContentBloc>().add(value);
         },
       ),
     );

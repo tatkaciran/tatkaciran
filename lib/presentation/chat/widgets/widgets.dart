@@ -8,6 +8,5 @@ export 'chat_top_bar_avatar.dart';
 export 'send_message_button.dart';
 export 'send_message_form_field.dart';
 export 'message_timestamp.dart';
-export 'message_text.dart';
 export 'message_item.dart';
 export 'message_content.dart';

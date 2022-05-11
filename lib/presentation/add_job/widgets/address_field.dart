@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:instajobs/presentation/add_job/add_job_page_widgets.dart';
+
+import 'add_job_items_description.dart';
+import 'add_job_items_title.dart';
 
 class Address extends StatelessWidget {
   const Address({Key? key}) : super(key: key);
@@ -9,7 +11,12 @@ class Address extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
-        children: AddJobPageWidgets.addressFieldChildren,
+        children: const [
+          SizedBox(height: 80),
+          AddJobItemsTitle('ADRES'),
+          SizedBox(height: 15),
+          AddJobItemsDescription('İlanınız hangi şehirde yayınlansın.'),
+        ],
       ),
     );
   }

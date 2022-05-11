@@ -28,9 +28,9 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: NestedScrollView(
           controller: scrollController,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          headerSliverBuilder: (c, innerBoxIsScrolled) => [
             SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(c),
               sliver: SliverSafeArea(
                 sliver: SliverPersistentHeader(
                   delegate: SliverAppBarDelegate(

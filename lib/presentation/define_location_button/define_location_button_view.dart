@@ -1,5 +1,4 @@
 import 'package:location_picker_with_google_maps/location_picker_with_google_maps.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../constants/constants.dart';
 import '../../config/managers/managers.dart';
@@ -11,33 +10,48 @@ class DefineLocationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GeocodingService _geocodingService = GeocodingService();
-    // GeolocatorService _geolocatorService = GeolocatorService();
     LocationManager _locationManager = LocationManager();
     AddressManager _addressManager = AddressManager(
       geocodingService: _geocodingService,
       locationManager: _locationManager,
     );
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => DefineLocationButtonManager(
-            addressManager: _addressManager,
-            locationManager: _locationManager,
-          )..initialize(),
-        ),
-      ],
-      child: Builder(
-        builder: (context) {
-          bool isLocationDefined =
-              context.watch<DefineLocationButtonManager>().isLocationDefined;
+    return DefineLocationButtonInit(
+      addressManager: _addressManager,
+      locationManager: _locationManager,
+    );
+  }
+}
 
-          return Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-            child: (isLocationDefined)
-                ? const DefinedLocationView()
-                : const NoDefinedLocationView(),
-          );
-        },
+class DefineLocationButtonInit extends StatelessWidget {
+  final LocationManager locationManager;
+  final AddressManager addressManager;
+
+  const DefineLocationButtonInit(
+      {Key? key, required this.locationManager, required this.addressManager})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const DefineLocationButtonView(isLocationDefined: false);
+  }
+}
+
+class DefineLocationButtonView extends StatelessWidget {
+  final bool isLocationDefined;
+  const DefineLocationButtonView({Key? key, this.isLocationDefined = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+      child: AnimatedCrossFade(
+        crossFadeState: (isLocationDefined)
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+        duration: const Duration(seconds: 1),
+        firstChild: const DefinedLocationView(isGeocodingDone: false),
+        secondChild: const NoDefinedLocationView(),
       ),
     );
   }

@@ -3,7 +3,6 @@
 import 'package:chats_repository/chats_repository.dart';
 import 'package:instajobs/constants/constants.dart';
 import 'package:instajobs/main_initializer.dart';
-import 'package:instajobs/presentation/auth/blocs/blocs.dart';
 import 'package:instajobs/presentation/chat/blocs/chats/chats_bloc.dart';
 import 'package:instajobs/presentation/chat/chat.dart';
 import 'package:instajobs/presentation/messages/blocs/blocs.dart';
@@ -19,24 +18,22 @@ class SendMessageButton extends StatelessWidget {
     // Job job = context.select((JobBloc bloc) => (bloc.state as GetJobState).job);
 
     // CONTENT
-    final String content = context
-        .select((ContentBloc bloc) => (bloc.state as GetContent).content);
+    final String content = context.watch<ContentBloc>().state;
 
     // JOB ID
-    final String _jobID = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).jobID);
+    final String _jobID = context.watch<SendMessageBloc>().state.jobID;
 
     // DISPLAY NAME
-    final String _displayName = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).displayName);
+    final String _displayName =
+        context.watch<SendMessageBloc>().state.displayName;
 
     // EMPLOYEE ID
-    final String _employeeID = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).employeeID);
+    final String _employeeID =
+        context.watch<SendMessageBloc>().state.employeeID;
 
     // EMPLOYER ID
-    final String _employerID = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).employerID);
+    final String _employerID =
+        context.watch<SendMessageBloc>().state.employerID;
     final String userID = user.id;
     return TextButton(
       child: const Icon(Icons.send),

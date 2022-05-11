@@ -24,7 +24,7 @@ class ChatMessages extends StatelessWidget {
     }
 
     while (state is ChatsLoaded) {
-      //     Job job = context
+      //     Job job = c
 
       return Expanded(
         child: Column(
@@ -37,8 +37,8 @@ class ChatMessages extends StatelessWidget {
                 shrinkWrap: true,
                 reverse: true,
                 itemCount: state.chats.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Chat _chat = state.chats[index];
+                itemBuilder: (BuildContext context, int i) {
+                  Chat _chat = state.chats[i];
                   String _senderID = _chat.senderID;
                   String _userID = user.id;
                   return _senderID == _userID
@@ -64,8 +64,7 @@ class JobInChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color _color = Theme.of(context).cardColor;
-    Job job = context
-        .select((InChatJobDetailsBloc bloc) => (bloc.state as GetJob).job!);
+    Job job = context.watch<JobInChatBloc>().state;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: _color,
@@ -112,10 +111,9 @@ class MessageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String _employeeID = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).employeeID);
-    final String _jobID = context.select((JobIdAndEmployeeIdBloc bloc) =>
-        (bloc.state as GetJobIDAndEmployeeID).jobID);
+    final String _employeeID =
+        context.watch<SendMessageBloc>().state.employeeID;
+    final String _jobID = context.watch<SendMessageBloc>().state.jobID;
     return Column(
       children: [
         Row(

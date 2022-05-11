@@ -13,7 +13,6 @@ import 'presentation/messages/blocs/blocs.dart';
 import 'package:messages_repository/messages_repository.dart';
 
 import 'constants/constants.dart';
-import 'presentation/add_job/blocs/blocs.dart';
 import 'presentation/chat/chat.dart';
 import 'presentation/chat/blocs/chats/chats_bloc.dart';
 import 'presentation/home/blocs/blocs.dart';
@@ -63,16 +62,13 @@ class App extends StatelessWidget {
     var _chatsBlocProvider = BlocProvider<ChatsBloc>(
         create: (_) => ChatsBloc(chatsRepository: FirebaseChatsRepository()));
 
-    var _isEditingBlocProvider =
-        BlocProvider<IsEditingBloc>(create: (context) => IsEditingBloc());
+    var _jobBlocProvider = BlocProvider<JobCubit>(create: (_) => JobCubit());
 
-    var _jobBlocProvider = BlocProvider<JobBloc>(create: (_) => JobBloc());
+    var _jobIdAndEmployeeIdBlocProvider =
+        BlocProvider<SendMessageBloc>(create: (_) => SendMessageBloc());
 
-    var _jobIdAndEmployeeIdBlocProvider = BlocProvider<JobIdAndEmployeeIdBloc>(
-        create: (_) => JobIdAndEmployeeIdBloc());
-
-    var _inChatJobDetailsBlocProvider = BlocProvider<InChatJobDetailsBloc>(
-        create: (_) => InChatJobDetailsBloc());
+    var _inChatJobDetailsBlocProvider =
+        BlocProvider<JobInChatBloc>(create: (_) => JobInChatBloc());
 
     return RepositoryProvider.value(
       value: authenticationRepository,
@@ -83,7 +79,7 @@ class App extends StatelessWidget {
           _messagesBlocProvider,
           _chatsBlocProvider,
           _jobsBlocProvider,
-          _isEditingBlocProvider,
+
           _jobBlocProvider,
           _jobIdAndEmployeeIdBlocProvider,
           _inChatJobDetailsBlocProvider,
@@ -100,8 +96,8 @@ class App extends StatelessWidget {
 
           var _navigationBlocProvider = BlocProvider(
             create: (context) =>
-                NavigationBloc(authenticationStream: _authenticationStream)
-                  ..add(const NavigationEvent.initialize(true)),
+                NavigationCubit(authenticationStream: _authenticationStream)
+                  ..initialize(true),
           );
 
           var _chatManagerChangeNotifierProvider = ChangeNotifierProvider(
@@ -113,7 +109,7 @@ class App extends StatelessWidget {
           );
 
           var _appStateManagerChangeNotifierProvider =
-              ChangeNotifierProvider(create: (context) => AppStateManager());
+              ChangeNotifierProvider(create: (c) => AppStateManager());
           return MultiProvider(
             providers: [
               //! TODO:  gereksiz providerları yerine taşı
@@ -149,7 +145,7 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationState _navigationbloc = context.watch<NavigationBloc>().state;
+    NavigationState _navigationbloc = context.watch<NavigationCubit>().state;
 
     _appRouter = AppRouter(navigationState: _navigationbloc);
     return MaterialApp.router(
