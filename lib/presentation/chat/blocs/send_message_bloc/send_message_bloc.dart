@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-class SendMessageBloc extends Cubit<SendMessageState> {
-  SendMessageBloc() : super(SendMessageState.empty());
+class SendMessageCubit extends Cubit<SendMessageState> {
+  SendMessageCubit() : super(SendMessageState.empty());
 
   void add(SendMessageState state) => emit(state);
 }

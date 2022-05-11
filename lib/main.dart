@@ -65,7 +65,7 @@ class App extends StatelessWidget {
     var _jobBlocProvider = BlocProvider<JobCubit>(create: (_) => JobCubit());
 
     var _jobIdAndEmployeeIdBlocProvider =
-        BlocProvider<SendMessageBloc>(create: (_) => SendMessageBloc());
+        BlocProvider<SendMessageCubit>(create: (_) => SendMessageCubit());
 
     var _inChatJobDetailsBlocProvider =
         BlocProvider<JobInChatBloc>(create: (_) => JobInChatBloc());

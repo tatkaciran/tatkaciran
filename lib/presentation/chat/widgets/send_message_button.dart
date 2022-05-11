@@ -21,19 +21,19 @@ class SendMessageButton extends StatelessWidget {
     final String content = context.watch<ContentBloc>().state;
 
     // JOB ID
-    final String _jobID = context.watch<SendMessageBloc>().state.jobID;
+    final String _jobID = context.watch<SendMessageCubit>().state.jobID;
 
     // DISPLAY NAME
     final String _displayName =
-        context.watch<SendMessageBloc>().state.displayName;
+        context.watch<SendMessageCubit>().state.displayName;
 
     // EMPLOYEE ID
     final String _employeeID =
-        context.watch<SendMessageBloc>().state.employeeID;
+        context.watch<SendMessageCubit>().state.employeeID;
 
     // EMPLOYER ID
     final String _employerID =
-        context.watch<SendMessageBloc>().state.employerID;
+        context.watch<SendMessageCubit>().state.employerID;
     final String userID = user.id;
     return TextButton(
       child: const Icon(Icons.send),

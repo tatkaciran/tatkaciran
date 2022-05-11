@@ -112,8 +112,8 @@ class MessageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String _employeeID =
-        context.watch<SendMessageBloc>().state.employeeID;
-    final String _jobID = context.watch<SendMessageBloc>().state.jobID;
+        context.watch<SendMessageCubit>().state.employeeID;
+    final String _jobID = context.watch<SendMessageCubit>().state.jobID;
     return Column(
       children: [
         Row(

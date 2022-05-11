@@ -23,7 +23,7 @@ class ChatManager extends ChangeNotifier {
     // Chat load bloc employeeID != userID
     BlocProvider.of<ChatsBloc>(context, listen: false)
         .add(LoadChats(jobID: job.jobID, employeeID: userID));
-    BlocProvider.of<SendMessageBloc>(context, listen: false)
+    BlocProvider.of<SendMessageCubit>(context, listen: false)
         .add(SendMessageState(
       jobID: job.jobID,
       displayName: displayName,
@@ -54,7 +54,7 @@ class ChatManager extends ChangeNotifier {
     );
 
     //! SET JOB ID AND EMPLOYEE ID BLOC // BUNUN YERINE DİREKT JOB GÖNDER
-    BlocProvider.of<SendMessageBloc>(context, listen: false)
+    BlocProvider.of<SendMessageCubit>(context, listen: false)
         .add(SendMessageState(
       jobID: message.jobID,
       displayName: message.displayName ?? '',
