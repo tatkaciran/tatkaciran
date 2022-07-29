@@ -1,1 +1,1 @@
-![](https://c.tenor.com/evXZ_kpDbtAAAAAC/khaby-khabane.gif)
+![](https://media.giphy.com/media/3oeSAQoA5PLG4jLTos/giphy.gif)
