@@ -16,7 +16,9 @@ class AuthenticationBloc
   })  : _authenticationRepository = authenticationRepository,
         super(const AuthenticationState.unknown()) {
     _authenticationUserChangedStream(authenticationRepository);
+
     on<AuthenticationUserChanged>(_onAuthenticationUserChanged);
+
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
   }
 
@@ -32,14 +34,18 @@ class AuthenticationBloc
   final AuthenticationRepository _authenticationRepository;
 
   void _onAuthenticationUserChanged(
-      AuthenticationUserChanged event, Emitter<AuthenticationState> emit) {
+    AuthenticationUserChanged event,
+    Emitter<AuthenticationState> emit,
+  ) {
     event.user != const AuthUser.empty()
         ? emit(AuthenticationState.authentication(event.user))
         : emit(const AuthenticationState.unauthenticated());
   }
 
   void _onAuthenticationLogoutRequested(
-      AuthenticationLogoutRequested event, Emitter<AuthenticationState> emit) {
+    AuthenticationLogoutRequested event,
+    Emitter<AuthenticationState> emit,
+  ) {
     unawaited(_authenticationRepository.logOut());
   }
 }

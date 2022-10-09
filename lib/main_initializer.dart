@@ -32,7 +32,7 @@ class MainInitializer {
 
   _geocodingInit() async {
     GeocodingGetCurrentAddress? geocodingGetCurrentAddress;
-    await geocodingGetCurrentAddress?.getCurrentAddress(LatLng(35, 32));
+    await geocodingGetCurrentAddress?.getCurrentAddress(const LatLng(35, 32));
   }
 
   _jobsDataSourcesInit() {

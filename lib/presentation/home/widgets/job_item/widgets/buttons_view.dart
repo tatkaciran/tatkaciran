@@ -34,7 +34,7 @@ class JobItemButtonsView extends StatelessWidget {
         crossFadeState: job.userID == user.id
             ? CrossFadeState.showFirst
             : CrossFadeState.showSecond,
-        duration: Duration.zero);
+        duration: const Duration(milliseconds: 300));
   }
 }
 
@@ -45,19 +45,16 @@ class JobItemDetailButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
-      child: ElevatedButton(
-        style: context.theme.elevatedButtonTheme.style,
-        child: const Text('Detail'),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (c) => JobDetailView(job: job)),
-          );
-          // _manager.detailButtonOnPressed(c);
-        },
-      ),
+    return ElevatedButton(
+      style: context.theme.elevatedButtonTheme.style,
+      child: const Text('Detail'),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (c) => JobDetailView(job: job)),
+        );
+        // _manager.detailButtonOnPressed(c);
+      },
     );
   }
 }

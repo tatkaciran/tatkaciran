@@ -8,16 +8,13 @@ class JobItemApplyButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
-      child: ElevatedButton(
-        style: context.theme.elevatedButtonTheme.style,
-        child: const Text('Apply'),
-        onPressed: () {
-          context.read<ChatManager>().fromJobToChat(context, job);
-          context.read<NavigationCubit>().showChat(true);
-        },
-      ),
+    return ElevatedButton(
+      style: context.theme.elevatedButtonTheme.style,
+      child: const Text('Apply'),
+      onPressed: () {
+        context.read<ChatManager>().fromJobToChat(context, job);
+        context.read<NavigationCubit>().showChat(true);
+      },
     );
   }
 }
